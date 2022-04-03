@@ -68,10 +68,11 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
 
 1. migrationとseeederの実行
 
-    テーブルの構築と初期データの投入を行う。Dockerコンテナが起動した状態で行う）。
+    テーブルの構築と初期データの投入を行う。（Dockerコンテナが起動した状態で行う）。
 
     ```bash
-    php artisan migrate:fresh --seed
+    php artisan migrate
+    php artisan db:seed
     ```
 
 ## 動作確認
