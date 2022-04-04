@@ -27,10 +27,10 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
     cd gp-attendance
     ```
 
-1. .env.sample ファイルをコピーし、.env ファイルを生成する。
+1. .env.example ファイルをコピーし、.env ファイルを生成する。
 
     ```bash
-    cp .env.sample .env
+    cp .env.example .env
     ```
 
 1. 必要があれば .env ファイルを編集する。
