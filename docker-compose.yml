@@ -58,6 +58,17 @@ services:
             network1:
                 ipv4_address: 192.168.105.31
 
+    mailhog:
+        build:
+            context: .
+            dockerfile: ./docker/mailhog/Dockerfile
+        ports:
+            - ${MAIL_PORT:-1025}:1025
+            - ${MAILHOG_HTTP_PORT:-8025}:8025
+        networks:
+            network1:
+                ipv4_address: 192.168.105.50
+
 networks:
     network1:
         ipam:
