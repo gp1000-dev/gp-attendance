@@ -25,7 +25,7 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
     - デフォルトでインストールされる7.4.xでOKだが、できれば8.0以上推奨。
     - WSL2の場合、合わせてphp-dom、php-mysqlライブラリもインストールしておく。
         ```bash
-        sudo apt install -y php php-dom php-mysql
+        sudo apt install -y php php-dom php-curl php-mysql
         ```
 - composer
 - npm （sassコンパイルする場合。後でもいい）
