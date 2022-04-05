@@ -56,13 +56,19 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
         APP_PORT=8880
         ```
 
-1. composer実行
-
-    PHPパッケージをインストールする。
+1. composerを実行し、PHPパッケージをインストールする。
 
     ```bash
     composer install
     ```
+
+1. APPキーを生成する。
+
+    ```bash
+    php artisan key:generate
+    ```
+
+    -  これを行わないと起動時に「No application encryption key has been specified.」エラーが表示される。
 
 1. Docker環境構築
 
