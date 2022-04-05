@@ -8,11 +8,18 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
 
 ## 前提
 
-下記がインストールされていること。
+下記が設定・インストールされていること。
 
-- WSL2（Windowsの場合）
+- Linux/Unix開発環境
+    - Windows：WSL2（Ubuntu）、curlのインストール
+    - Mac：HomeBrew
 - Docker
-- PHP （8.0以上推奨）
+- PHP
+    - デフォルトでインストールされる7.4.xでOKだが、できれば8.0以上推奨。
+    - WSL2の場合、合わせてphp-dom、php-mysqlライブラリもインストールしておく。
+        ```bash
+        sudo apt install -y php php-dom php-mysql
+        ```
 - composer
 - npm （sassコンパイルする場合。後でもいい）
 
