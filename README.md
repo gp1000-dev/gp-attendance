@@ -1,18 +1,32 @@
 # Laravel実習 勤怠管理システム（gp-attendance）
 
-## システムの概要
+## 概要
 
 Laravelの実習として、GIFT PLACEの勤怠管理システムを作成していきます。
 
-- Dockerによる動作環境もプロジェクトに含まれます。
+## 内容
+
+- 勤怠管理システムソース（Laravel）
+- Docker動作環境
+    - Nginx
+    - PHP-FPM
+    - MySQL（ノーマル＆テスト用）
+    - Mailhog（メール送信テストサーバ）
 
 ## 前提
 
-下記がインストールされていること。
+下記が設定・インストールされていること。
 
-- WSL2（Windowsの場合）
+- Linux/Unix開発環境
+    - Windows：WSL2（Ubuntu）、curlのインストール
+    - Mac：HomeBrew
 - Docker
-- PHP （8.0以上推奨）
+- PHP
+    - デフォルトでインストールされる7.4.xでOKだが、できれば8.0以上推奨。
+    - WSL2の場合、合わせてphp-dom、php-mysqlライブラリもインストールしておく。
+        ```bash
+        sudo apt install -y php php-dom php-mysql
+        ```
 - composer
 - npm （sassコンパイルする場合。後でもいい）
 
@@ -83,3 +97,7 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
 
    - email: creator1@example.com
    - password: P@ssw0rd
+
+1. Mailhog（メールテストサーバ）の動作確認
+
+    - ブラウザで http://localhost:8025 にアクセス
