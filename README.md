@@ -95,6 +95,15 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
     php artisan db:seed
     ```
 
+    - 「No route to host」エラーが発生する場合、Dockerコンテナ内でコマンド実行してください。（仮の対策）
+
+        ```bash
+        docker-compose exec php-fpm bash
+        php artisan migrate
+        php artisan db:seed
+        exit
+        ```
+
 ## 動作確認
 
 1. ブラウザで http://localhost:8880 にアクセスし、トップページの表示を確認する。
