@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-8">
             <h1>このシステムについて</h1>
-            <p>このシステムはGiftPlaceのクリエーターの勤怠管理を行うものです。<br />
-            このシステムはGiftPlaceのクリエーターによって開発されました。</p>
+            <p>このシステムはGIFT PLACEのクリエーターの勤怠管理を行うものです。<br />
+            このシステムはGIFT PLACEのクリエーターによって開発されました。</p>
         </div>
     </div>
 </div>
