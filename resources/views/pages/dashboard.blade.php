@@ -8,5 +8,10 @@
           <h1>ダッシュボード</h1>
         <div>
     <div>
+    <div class="row">
+        <div class="col-md-8">
+          <a href="{{ url('/about') }}">システムについて</a>
+        <div>
+    <div>
 </div>
 @endsection
