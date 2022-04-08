@@ -17,8 +17,14 @@ class UserSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'クリエイター1',
+            'last_name' => '久里',
+            'first_name' => '英太',
+            'last_kana_name' => 'クリ',
+            'first_kana_name' => 'エイタ',
             'email' => 'creator1@example.com',
             'password' => Hash::make('P@ssw0rd'),
+            'gender' => 'male',
+            'birthdate' => \Carbon\Carbon::parse('2001-05-01'),
         ]);
     }
 }
