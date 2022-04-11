@@ -25,4 +25,4 @@ Route::get('/about', function () {
     return view('pages.about');
 });
 /* User page */
-Route::get('/attendance/', [App\Http\Controllers\UserController::class, 'index']);
+Route::get('/user/', [App\Http\Controllers\UserController::class, 'index']);
