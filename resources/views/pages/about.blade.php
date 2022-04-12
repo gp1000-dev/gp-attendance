@@ -8,7 +8,7 @@
             <p>このシステムはGIFT PLACEのクリエーターの勤怠管理を行うものです。<br />
             このシステムはGIFT PLACEのクリエーターによって開発されました。<br />
             
-            <a href= "{{url('https://gp1000.jp')}}" target="_blank" rel="noopener noreferrer" > GIFT PLACE </a>
+            <a href= "https://gp1000.jp" target="_blank" rel="noopener noreferrer" > GIFT PLACE </a>
             </p> 
         </div>
     </div>
