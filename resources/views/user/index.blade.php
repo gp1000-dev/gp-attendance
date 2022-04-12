@@ -18,7 +18,7 @@
                                     女性
                                 <?php endif; ?>
                             </td></tr>
-                            <tr><th>誕生日</th><td>{{ date('Y年n月j日', strtotime(Auth::user()->birthdate)) }}</td></tr>
+                            <tr><th>誕生日</th><td>{{ Auth::user()->birthdate->format('Y年n月j日') }}</td></tr>
                         </tbody>
                     </table>
                 </div>
