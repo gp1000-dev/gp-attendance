@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">ユーザー情報</div>
                 <div class="card-body">
-                    <table>
+                    <table class="table table-bordered">
                         <tbody>
                             <tr><th>氏名</th><td>{{ Auth::user()->last_name }}&ensp;{{ Auth::user()->first_name }}</td></tr>
                             <tr><th>氏名カナ</th><td>{{ Auth::user()->last_kana_name }}&ensp;{{ Auth::user()->first_kana_name }}</td></tr>
@@ -23,8 +23,8 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <button>ユーザー情報変更</button>
-                    <button>パスワード変更</button>
+                    <a href="#">ユーザー情報変更</a>
+                    <a href="#">パスワード変更</a>
                 </div>
             </div>
         </div>
