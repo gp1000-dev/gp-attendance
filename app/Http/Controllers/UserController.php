@@ -25,4 +25,14 @@ class UserController extends Controller
     {
         return view('user/index');
     }
+
+    /**
+     * Change userpassword page
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function password()
+    {
+        return view('user/password');
+    }
 }
