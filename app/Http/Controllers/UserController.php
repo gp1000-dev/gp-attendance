@@ -35,4 +35,14 @@ class UserController extends Controller
     {
         return view('user/password');
     }
+
+    /**
+     * Update profile page
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function update()
+    {
+        return view('user/update');
+    }
 }
