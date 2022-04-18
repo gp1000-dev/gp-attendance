@@ -26,3 +26,5 @@ Route::get('/about', function () {
 });
 /* User page */
 Route::get('/user/', [App\Http\Controllers\UserController::class, 'index']);
+/* change user password page */
+Route::get('/user/password', [App\Http\Controllers\UserController::class, 'password'])->name('password.change');
