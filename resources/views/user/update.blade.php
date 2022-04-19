@@ -17,11 +17,11 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="last_name" value="{{ Auth::user()->last_name }}" required>
+                                                <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}" required>
                                             </div>
                                             &ensp;
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="first_name" value="{{ Auth::user()->first_name }}" required>
+                                                <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}" required>
                                             </div>
                                         </div>
                                     </td>
@@ -31,11 +31,11 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="last_kana_name" value="{{ Auth::user()->last_kana_name }}" required>
+                                                <input type="text" class="form-control" name="last_kana_name" value="{{ $user->last_kana_name }}" required>
                                             </div>
                                             &ensp;
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="first_kana_name" value="{{ Auth::user()->first_kana_name }}" required>
+                                                <input type="text" class="form-control" name="first_kana_name" value="{{ $user->first_kana_name }}" required>
                                             </div>
                                         </div>
                                     </td>
@@ -43,7 +43,7 @@
                                 <tr>
                                     <th class="align-middle">性別</th>
                                     <td>
-                                        <?php if (Auth::user()->gender === 'male'): ?>
+                                        <?php if ($user->gender === 'male'): ?>
                                             <input type="radio" name="gender" value="male" checked>男性
                                             &ensp;
                                             <input type="radio" name="gender" value="female">女性
@@ -59,19 +59,19 @@
                                     <td>
                                         <select name="birthdate-year">
                                             <?php for ($i=1900; $i<=2022; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if (Auth::user()->birthdate->format('Y') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
+                                                <option value="<?php echo $i ?>" <?php if ($user->birthdate->format('Y') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                         年
                                         <select name="birthdate-month">
                                             <?php for ($i=1; $i<=12; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if (Auth::user()->birthdate->format('n') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
+                                                <option value="<?php echo $i ?>" <?php if ($user->birthdate->format('n') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                         月
                                         <select name="birthdate-day">
                                             <?php for ($i=1; $i<=31; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if (Auth::user()->birthdate->format('j') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
+                                                <option value="<?php echo $i ?>" <?php if ($user->birthdate->format('j') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                         日
