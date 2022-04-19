@@ -43,35 +43,29 @@
                                 <tr>
                                     <th class="align-middle">性別</th>
                                     <td>
-                                        <?php if ($user->gender === 'male'): ?>
-                                            <input type="radio" name="gender" value="male" checked>男性
-                                            &ensp;
-                                            <input type="radio" name="gender" value="female">女性
-                                        <?php else: ?>
-                                            <input type="radio" name="gender" value="male">男性
-                                            &ensp;
-                                            <input type="radio" name="gender" value="female" checked>女性
-                                        <?php endif; ?>
+                                        <input type="radio" name="gender" value="male" <?php echo  ($user->gender === 'male') ? 'checked' : '' ?>>男性
+                                        &ensp;
+                                        <input type="radio" name="gender" value="female" <?php echo ($user->gender === 'female') ? 'checked' : '' ?>>女性
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="align-middle">誕生日</th>
                                     <td>
                                         <select name="birthdate-year">
-                                            <?php for ($i=1900; $i<=2022; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if ($user->birthdate->format('Y') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
+                                            <?php for ($i=\Carbon\Carbon::now()->addYears(-60)->year; $i<=\Carbon\Carbon::now()->year; $i++) { ?>
+                                                <option value="<?php echo $i ?>" <?php if (intval($user->birthdate->format('Y')) === $i) { echo 'selected'; } ?>><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                         年
                                         <select name="birthdate-month">
                                             <?php for ($i=1; $i<=12; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if ($user->birthdate->format('n') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
+                                                <option value="<?php echo $i ?>" <?php if (intval($user->birthdate->format('n')) === $i) { echo 'selected'; } ?>><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                         月
                                         <select name="birthdate-day">
                                             <?php for ($i=1; $i<=31; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if ($user->birthdate->format('j') == $i) { echo 'selected'; } ?>><?php echo $i ?></option>
+                                                <option value="<?php echo $i ?>" <?php if (intval($user->birthdate->format('j')) === $i) { echo 'selected'; } ?>><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                         日
