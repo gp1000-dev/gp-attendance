@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -34,5 +35,17 @@ class UserController extends Controller
     public function password()
     {
         return view('user/password');
+    }
+
+    /**
+     * Update profile page
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function update()
+    {
+        $user = Auth::user();
+
+        return view('user/update', compact('user'));
     }
 }
