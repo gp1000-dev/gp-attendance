@@ -52,21 +52,21 @@
                                     <th class="align-middle">誕生日</th>
                                     <td>
                                         <select name="birthdate-year">
-                                            <?php for ($i=\Carbon\Carbon::now()->addYears(-60)->year; $i<=\Carbon\Carbon::now()->year; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if (intval($user->birthdate->format('Y')) === $i) { echo 'selected'; } ?>><?php echo $i ?></option>
-                                            <?php } ?>
+                                            @foreach (range(\Carbon\Carbon::now()->addYears(-60)->year, \Carbon\Carbon::now()->year) as $year)
+                                                <option value="{{ $year }}" {{ intval($user->birthdate->format('Y')) === $year ? 'selected' : '' }}>{{ $year }}</option>
+                                            @endforeach
                                         </select>
                                         年
                                         <select name="birthdate-month">
-                                            <?php for ($i=1; $i<=12; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if (intval($user->birthdate->format('n')) === $i) { echo 'selected'; } ?>><?php echo $i ?></option>
-                                            <?php } ?>
+                                            @foreach (range(1, 12) as $month)
+                                                <option value="{{ $month }}" {{ intval($user->birthdate->format('n')) === $month ? 'selected' : '' }}>{{ $month }}</option>
+                                            @endforeach
                                         </select>
                                         月
                                         <select name="birthdate-day">
-                                            <?php for ($i=1; $i<=31; $i++) { ?>
-                                                <option value="<?php echo $i ?>" <?php if (intval($user->birthdate->format('j')) === $i) { echo 'selected'; } ?>><?php echo $i ?></option>
-                                            <?php } ?>
+                                            @foreach (range(1, 31) as $day)
+                                                <option value="{{ $day }}" {{ intval($user->birthdate->format('j')) === $day ? 'selected' : '' }}>{{ $day }}</option>
+                                            @endforeach
                                         </select>
                                         日
                                     </td>
