@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 use App\Models\User;
 
@@ -54,7 +55,7 @@ class UserController extends Controller
     /**
      * User profile update process
      *
-     * @return
+     * @return Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -63,34 +64,19 @@ class UserController extends Controller
 
         $user->last_name = $request->last_name;
         $user->first_name = $request->first_name;
+
+        $user->last_kana_name = $request->last_kana_name;
+        $user->first_kana_name = $request->first_kana_name;
+        
         $user->gender = $request->gender;
 
-        $year = $request->birthdate_year;
-        $month = $request->birthdate_month;
-        $day = $request->birthdate_day;
-
-        $year = (string)$year;
-
-        if ($month < 10) {
-            $month = '0' . $month;
-        } else {
-            $month = (string)$month;
-        }
-
-        if ($day < 10) {
-            $day = '0' . $day;
-        } else {
-            $day = (string)$day;
-        }
-
-        $birthdate = $year . '-' . $month . '-' . $day;
-
-        $birthdate = strtotime($birthdate);
-
-        $user->birthdate = $birthdate;
+        $user->birthdate = Carbon::createFromDate(
+            $request->birthdate_year,
+            $request->birthdate_month,
+            $request->birthdate_day
+        );
 
         $user->save();
-
 
         return redirect()->route('user.index');
     }
