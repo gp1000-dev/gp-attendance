@@ -30,4 +30,14 @@ class UpdateProfile extends FormRequest
             'first_kana_name' => 'required',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'last_name' => '姓',
+            'first_name' => '名前',
+            'last_kana_name' => '姓カナ',
+            'first_kana_name' => '名前カナ',
+        ];
+    }
 }
