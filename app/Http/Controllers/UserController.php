@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
     /**
@@ -42,10 +44,54 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function update()
+    public function edit()
     {
         $user = Auth::user();
 
         return view('user/update', compact('user'));
+    }
+
+    /**
+     * User profile update process
+     *
+     * @return
+     */
+    public function update(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        $user->gender = $request->gender;
+
+        $year = $request->birthdate_year;
+        $month = $request->birthdate_month;
+        $day = $request->birthdate_day;
+
+        $year = (string)$year;
+
+        if ($month < 10) {
+            $month = '0' . $month;
+        } else {
+            $month = (string)$month;
+        }
+
+        if ($day < 10) {
+            $day = '0' . $day;
+        } else {
+            $day = (string)$day;
+        }
+
+        $birthdate = $year . '-' . $month . '-' . $day;
+
+        $birthdate = strtotime($birthdate);
+
+        $user->birthdate = $birthdate;
+
+        $user->save();
+
+
+        return redirect()->route('user.index');
     }
 }
