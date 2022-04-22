@@ -79,6 +79,6 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('flash_message', 'ユーザー情報を更新しました。');
     }
 }
