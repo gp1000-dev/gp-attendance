@@ -4,6 +4,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="card">
                 <form method="POST" action="{{ route('user.update') }}">
                     @csrf
@@ -17,11 +26,11 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}" required>
+                                                <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}">
                                             </div>
                                             &ensp;
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}" required>
+                                                <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}">
                                             </div>
                                         </div>
                                     </td>
@@ -31,11 +40,11 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="last_kana_name" value="{{ $user->last_kana_name }}" required>
+                                                <input type="text" class="form-control" name="last_kana_name" value="{{ $user->last_kana_name }}">
                                             </div>
                                             &ensp;
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="first_kana_name" value="{{ $user->first_kana_name }}" required>
+                                                <input type="text" class="form-control" name="first_kana_name" value="{{ $user->first_kana_name }}">
                                             </div>
                                         </div>
                                     </td>

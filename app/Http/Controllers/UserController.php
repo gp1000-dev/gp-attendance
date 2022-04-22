@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Http\Requests\UpdateProfile;
 
 class UserController extends Controller
 {
@@ -57,7 +58,7 @@ class UserController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(UpdateProfile $request)
     {
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
@@ -67,7 +68,7 @@ class UserController extends Controller
 
         $user->last_kana_name = $request->last_kana_name;
         $user->first_kana_name = $request->first_kana_name;
-        
+
         $user->gender = $request->gender;
 
         $user->birthdate = Carbon::createFromDate(
