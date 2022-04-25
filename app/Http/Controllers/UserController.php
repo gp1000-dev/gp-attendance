@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
+use App\Models\User;
+use App\Http\Requests\UpdateProfile;
 
 class UserController extends Controller
 {
@@ -42,10 +46,39 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function update()
+    public function edit()
     {
         $user = Auth::user();
 
         return view('user/update', compact('user'));
+    }
+
+    /**
+     * User profile update process
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateProfile $request)
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+
+        $user->last_kana_name = $request->last_kana_name;
+        $user->first_kana_name = $request->first_kana_name;
+
+        $user->gender = $request->gender;
+
+        $user->birthdate = Carbon::createFromDate(
+            $request->birthdate_year,
+            $request->birthdate_month,
+            $request->birthdate_day
+        );
+
+        $user->save();
+
+        return redirect()->route('user.index')->with('flash_message', 'ユーザー情報を更新しました。');
     }
 }

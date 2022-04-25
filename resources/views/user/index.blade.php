@@ -4,6 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            @if(session('flash_message'))
+                <div class="alert alert-success">
+                    {{ session('flash_message') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">ユーザー情報</div>
                 <div class="card-body">
