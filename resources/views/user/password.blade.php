@@ -4,11 +4,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if (session('warning'))
+                <div class="alert alert-danger">
+                    {{ session('warning') }}
+                </div>
+            @endif
             <div class="card">
-                <form method="POST" action="{{ route('password.change') }}">
+                <form method="POST" action="{{ route('update.password') }}">
                     @csrf
-
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="id" value="{{ Auth::user()->id }}">
 
                     <div class="card-header">パスワード変更</div>
 
