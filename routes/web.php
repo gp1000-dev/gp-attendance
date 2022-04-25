@@ -28,6 +28,7 @@ Route::get('/about', function () {
 Route::get('/user/', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
 /* change user password page */
 Route::get('/user/password', [App\Http\Controllers\UserController::class, 'password'])->name('password.change');
+Route::post('/user/password', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('update.password');
 /* update profile page */
 Route::get('/user/update', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
