@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <!-- バリデーション時のエラーを報告 -->
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -13,9 +14,16 @@
                     </ul>
                 </div>
             @endif
+            <!-- エラー発生でリダイレクトの時の報告 -->
+            @if(session('warning'))
+                <div class="alert alert-danger">
+                    {{ session('warning') }}
+                </div>
+            @endif
             <div class="card">
                 <form method="POST" action="{{ route('user.update') }}">
                     @csrf
+                    <input type="hidden" name="id" value="{{ Auth::user()->id }}">
 
                     <div class="card-header">ユーザー情報変更</div>
                     <div class="card-body">
