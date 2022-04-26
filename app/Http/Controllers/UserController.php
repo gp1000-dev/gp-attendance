@@ -106,7 +106,7 @@ class UserController extends Controller
         }
 
         // パスワードを保存
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($request->new_password);
         $user->save();
 
         return redirect()->route('user.index')->with('flash_message', 'パスワードを変更しました。');
