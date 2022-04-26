@@ -35,4 +35,11 @@ class UpdatePassword extends FormRequest
             ],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'new_password' => '新しいパスワード',
+        ];
+    }
 }
