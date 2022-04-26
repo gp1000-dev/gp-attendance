@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Http\Requests\UpdateProfile;
@@ -108,16 +107,7 @@ class UserController extends Controller
 
         // パスワードを保存
         $user->password = Hash::make($request->password);
-        $message = $user->save();
-
-        Log::emergency($message);
-        Log::alert($message);
-        Log::critical($message);
-        Log::error($message);
-        Log::warning($message);
-        Log::notice($message);
-        Log::info($message);
-        Log::debug($message);
+        $user->save();
 
         return redirect()->route('user.index')->with('flash_message', 'パスワードを変更しました。');
     }
