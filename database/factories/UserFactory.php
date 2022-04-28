@@ -16,7 +16,6 @@ class UserFactory extends Factory
     {
         $gender = $this->faker->randomElement(['male', 'female']);
         return [
-            'name' => $this->faker->name($gender),
             'last_name' => $this->faker->lastName($gender),
             'first_name' => $this->faker->firstName($gender),
             'last_kana_name' => $this->faker->lastKanaName($gender),
