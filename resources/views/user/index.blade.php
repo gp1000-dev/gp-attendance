@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('user.edit') }}">ユーザー情報変更</a>
-                    <a href="{{ route('password.change') }}">パスワード変更</a>
+                    <a href="{{ route('user.password.edit') }}">パスワード変更</a>
                 </div>
             </div>
         </div>

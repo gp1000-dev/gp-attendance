@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Http\Requests\UpdateProfile;
+use App\Http\Requests\UpdatePassword;
 
 class UserController extends Controller
 {
@@ -90,5 +92,33 @@ class UserController extends Controller
 
         // ユーザーページへリダイレクト
         return redirect()->route('user.index')->with('flash_message', 'ユーザー情報を更新しました。');
+    }
+
+    /**
+     * User password update process
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function updatePassword(UpdatePassword $request)
+    {
+        // IDのチェック
+        if ($request->id != Auth::user()->id) {
+            return redirect()->route('user.password.edit')->with('warning', '致命的なエラーです。');
+        }
+
+        // ユーザー情報の取得
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        // 現在のパスワードをチェック
+        if (!password_verify($request->password, $user->password)) {
+            return redirect()->route('user.password.edit')->with('warning', '現在のパスワードが違います。');
+        }
+
+        // パスワードを保存
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('user.index')->with('flash_message', 'パスワードを変更しました。');
     }
 }
