@@ -93,7 +93,7 @@ class UserController extends Controller
     {
         // IDのチェック
         if ($request->id != Auth::user()->id) {
-            return redirect()->route('password.change')->with('warning', '致命的なエラーです。');
+            return redirect()->route('user.password.edit')->with('warning', '致命的なエラーです。');
         }
 
         // ユーザー情報の取得
@@ -102,7 +102,7 @@ class UserController extends Controller
 
         // 現在のパスワードをチェック
         if (!password_verify($request->password, $user->password)) {
-            return redirect()->route('password.change')->with('warning', 'パスワードが違います。');
+            return redirect()->route('user.password.edit')->with('warning', 'パスワードが違います。');
         }
 
         // パスワードを保存

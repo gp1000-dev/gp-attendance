@@ -21,7 +21,7 @@
                 </div>
             @endif
             <div class="card">
-                <form method="POST" action="{{ route('update.password') }}">
+                <form method="POST" action="{{ route('user.password.update') }}">
                     @csrf
                     <input type="hidden" name="id" value="{{ Auth::user()->id }}">
 

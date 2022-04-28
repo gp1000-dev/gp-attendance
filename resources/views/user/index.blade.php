@@ -28,8 +28,8 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="#">ユーザー情報変更</a>
-                    <a href="#">パスワード変更</a>
+                    <a href="{{ route('user.edit') }}">ユーザー情報変更</a>
+                    <a href="{{ route('user.password.edit') }}">パスワード変更</a>
                 </div>
             </div>
         </div>
