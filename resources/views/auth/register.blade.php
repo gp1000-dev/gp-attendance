@@ -76,7 +76,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input id="male" type="radio" class="form-check-input" name="gender" value="male" checked>
+                                    <input id="male" type="radio" class="form-check-input" name="gender" value="male">
                                     <label class="form-check-label" for="male">男性</label>
                                 </div>
                                 <div class="form-check">
@@ -93,6 +93,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <select name="birthdate_year" class="form-select">
+                                            <option value="">----</option>
                                             @foreach (range(\Carbon\Carbon::now()->addYears(-60)->year, \Carbon\Carbon::now()->year) as $year)
                                                 <option value="{{ $year }}" {{ $year === old('birthdate_year') ? 'selected' : '' }}>{{ $year }}</option>
                                             @endforeach
@@ -101,6 +102,7 @@
                                     年
                                     <div class="col-md-3">
                                         <select name="birthdate-month" class="form-select">
+                                            <option value="">--</option>
                                             @foreach (range(1, 12) as $month)
                                                 <option value="{{ $month }}" {{ $month === old('birthdate_month') ? 'selected' : '' }}>{{ $month }}</option>
                                             @endforeach
@@ -109,6 +111,7 @@
                                     月
                                     <div class="col-md-3">
                                         <select name="birthdate-day" class="form-select">
+                                            <option value="">--</option>
                                             @foreach (range(1, 31) as $day)
                                                 <option value="{{ $day }}" {{ $day === old('birthdate_day') ? 'selected' : '' }}>{{ $day }}</option>
                                             @endforeach
