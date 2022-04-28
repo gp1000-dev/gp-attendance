@@ -112,7 +112,7 @@ class UserController extends Controller
 
         // 現在のパスワードをチェック
         if (!password_verify($request->password, $user->password)) {
-            return redirect()->route('user.password.edit')->with('warning', 'パスワードが違います。');
+            return redirect()->route('user.password.edit')->with('warning', '現在のパスワードが違います。');
         }
 
         // パスワードを保存
