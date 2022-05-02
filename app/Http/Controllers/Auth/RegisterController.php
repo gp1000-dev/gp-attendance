@@ -60,8 +60,8 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'gender' => ['required', 'in:male,female'],
             'birthdate_year' => ['required', 'numeric'],
-            'birthdate_month' => ['required', 'numeric', 'bitween:1,12'],
-            'birthdate_day' => ['required', 'numeric', 'bitween:1,31'],
+            'birthdate_month' => ['required', 'numeric', 'between:1,12'],
+            'birthdate_day' => ['required', 'numeric', 'between:1,31'],
         ]);
     }
 
