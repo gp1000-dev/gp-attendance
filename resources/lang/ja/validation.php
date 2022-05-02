@@ -153,6 +153,17 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'last_name' => '姓',
+        'first_name' => '名前',
+        'last_kana_name' => '姓カナ',
+        'first_kana_name' => '名前カナ',
+        'email' => 'メールアドレス',
+        'password' => 'パスワード',
+        'gender' => '性別',
+        'birthdate_year' => '誕生年',
+        'birthdate_month' => '誕生月',
+        'birthdate_day' => '誕生日',
+    ],
 
 ];
