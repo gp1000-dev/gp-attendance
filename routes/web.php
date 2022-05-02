@@ -32,3 +32,16 @@ Route::post('/user/password', [App\Http\Controllers\UserController::class, 'upda
 /* update profile page */
 Route::get('/user/update', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+
+
+/**
+ * 管理者画面
+ */
+Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+    Auth::routes([
+        'register' => false,
+        // 'verify' => true,
+    ]);
+
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+});
