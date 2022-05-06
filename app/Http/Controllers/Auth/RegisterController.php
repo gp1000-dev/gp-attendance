@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 use Carbon\Carbon;
 
@@ -57,7 +58,14 @@ class RegisterController extends Controller
             'last_kana_name' => ['required', 'string', 'max:255'],
             'first_kana_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers(),
+                'confirmed',
+            ],
             'gender' => ['required', 'in:male,female'],
             'birthdate_year' => ['required', 'numeric'],
             'birthdate_month' => ['required', 'numeric', 'between:1,12'],
