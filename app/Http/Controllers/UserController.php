@@ -8,8 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
-use App\Http\Requests\UpdateProfileRequests;
-use App\Http\Requests\UpdatePasswordRequests;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 
 class UserController extends Controller
 {
@@ -60,7 +60,7 @@ class UserController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateProfileRequests $request)
+    public function update(UpdateProfileRequest $request)
     {
         // IDチェック
         if ($request->id != Auth::user()->id) {
@@ -99,7 +99,7 @@ class UserController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse
      */
-    public function updatePassword(UpdatePasswordRequests $request)
+    public function updatePassword(UpdatePasswordRequest $request)
     {
         // IDのチェック
         if ($request->id != Auth::user()->id) {

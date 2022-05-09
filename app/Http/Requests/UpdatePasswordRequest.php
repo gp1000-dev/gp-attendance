@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
-class UpdateProfileRequests extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +25,21 @@ class UpdateProfileRequests extends FormRequest
     public function rules()
     {
         return [
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'last_kana_name' => 'required',
-            'first_kana_name' => 'required',
+            'new_password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers(),
+            ],
         ];
     }
 
     public function attributes()
     {
         return [
-            'last_name' => '姓',
-            'first_name' => '名前',
-            'last_kana_name' => '姓カナ',
-            'first_kana_name' => '名前カナ',
+            'new_password' => '新しいパスワード',
         ];
     }
 }
