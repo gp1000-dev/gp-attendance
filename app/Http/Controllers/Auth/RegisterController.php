@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
+
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -50,9 +53,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_kana_name' => ['required', 'string', 'max:255'],
+            'first_kana_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers(),
+                'confirmed',
+            ],
+            'gender' => ['required', 'in:male,female'],
+            'birthdate_year' => ['required', 'numeric'],
+            'birthdate_month' => ['required', 'numeric', 'between:1,12'],
+            'birthdate_day' => ['required', 'numeric', 'between:1,31'],
         ]);
     }
 
@@ -65,9 +82,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'last_name' => $data['last_name'],
+            'first_name' => $data['first_name'],
+            'last_kana_name' => $data['last_kana_name'],
+            'first_kana_name' => $data['first_kana_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'gender' => $data['gender'],
+            'birthdate' => Carbon::createFromDate($data['birthdate_year'], $data['birthdate_month'], $data['birthdate_day']),
         ]);
     }
 }
