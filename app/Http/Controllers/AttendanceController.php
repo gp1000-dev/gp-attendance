@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -21,8 +22,11 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('attendances/index');
+        $month = $request->month;
+        $dt = new Carbon('2022-05-10');
+
+        return view('attendances/index')->with('dt', $dt);
     }
 }
