@@ -33,9 +33,7 @@
                                     <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '05:00' : '' }}</td>
                                     <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '体調不良' : '' }}</td>
                                     <td>
-                                        @if ($date->dayOfWeek === 0 || $date->dayOfWeek === 6)
-
-                                        @elseif ($date->eq(\Carbon\Carbon::today()))
+                                        @if ($date->eq(\Carbon\Carbon::today()))
                                             <button class="btn btn-primary btn-sm">登録</button>
                                         @elseif ($date->lt(\Carbon\Carbon::today()))
                                             <button class="btn btn-primary btn-sm">変更</button>
