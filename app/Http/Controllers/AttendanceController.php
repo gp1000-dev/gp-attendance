@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use \Carbon\Carbon;
 
 class AttendanceController extends Controller
@@ -29,7 +30,7 @@ class AttendanceController extends Controller
         $dt = new Carbon('2022-05-10');
 
         /* 1月分のデータを取得する */
-        $attendances = Attendance::where('user_id', 1)
+        $attendances = Attendance::where('user_id', Auth::user()->id)
             ->where('date', '>=', $dt->copy()->startOfMonth())
             ->where('date', '<=', $dt->copy()->endOfMonth())
             ->get();
