@@ -19,24 +19,68 @@
                                 <td></td>
                             </tr>
                             @php
+                                /* 月初から月末までの日付を作る */
                                 $period = \Carbon\CarbonPeriod::create(
+                                    /* オブジェクトインスタンスなので値を保持するためコピーする必要がある */
                                     $dt->copy()->startOfMonth(),
                                     $dt->copy()->endOfMonth()
                                 );
                             @endphp
+                            {{-- 1日づつ処理する --}}
                             @foreach ($period as $date)
+                                {{-- @php
+                                    $attendance = $attendances
+                                        ->first(function ($a) use($date) {
+                                            return $a->date->eq($date);
+                                        });
+                                @endphp --}}
+                                @php
+                                    /* DBにデータがある日だけデータを入れる */
+                                    $attendance = null; /* データがない日はヌルが入る */
+                                    /* DBから取得したレコードを1件づつ確認する */
+                                    foreach ($attendances as $attendance_) {
+                                        /* レコードの中に一致する日付がある場合は */
+                                        if ($attendance_->date->eq($date)) {
+                                            /* そのデータをその日のデータとする */
+                                            $attendance = $attendance_;
+                                            break; /* 最初の1件目だけを取り上げる */
+                                        }
+                                    }
+                                @endphp
+                                {{-- 日曜日と土曜日は背景が灰色になる --}}
                                 <tr class="{{ $date->dayOfWeek === 0 || $date->dayOfWeek === 6 ? 'table-secondary' : '' }}">
+                                    {{-- 日本語で日付と曜日を表示する --}}
                                     <td>{{ $date->isoFormat('D(ddd)') }}</td>
-                                    <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '出' : '' }}</td>
-                                    <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '13:00' : '' }}</td>
-                                    <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '18:00' : '' }}</td>
-                                    <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '05:00' : '' }}</td>
-                                    <td>{{ $date->dayOfWeek !== 0 && $date->dayOfWeek !== 6 ? '体調不良' : '' }}</td>
+                                    {{-- その日のデータがある場合だけ表示する --}}
                                     <td>
+                                        {{-- 出席した場合出力する --}}
+                                        {{ $attendance ? ($attendance->attended ? '出' : '') : '' }}
+                                    </td>
+                                    <td>
+                                        {{-- 出席時間 --}}
+                                        {{ $attendance ? ($attendance->start_time ? $attendance->start_time->format('H:i') : '') : '' }}
+                                    </td>
+                                    <td>
+                                        {{-- 退出時間 --}}
+                                        {{ $attendance ? ($attendance->end_time ? $attendance->end_time->format('H:i') : '') : '' }}
+                                    </td>
+                                    <td>
+                                        {{-- 出席の場合は勤務時間をメッソドで求める --}}
+                                        {{ $attendance ? ($attendance->attended ? $attendance->workTime()->format('H:i') : '') : '' }}
+                                    </td>
+                                    <td>
+                                        {{-- コメント(備考) --}}
+                                        {{ $attendance ? ($attendance->comment ? $attendance->comment : '') : '' }}
+                                    </td>
+                                    <td>
+                                        {{-- ボタンの表示 --}}
+                                        {{-- 今日の場合は"登録"ボタン --}}
                                         @if ($date->eq(\Carbon\Carbon::today()))
                                             <button class="btn btn-primary btn-sm">登録</button>
+                                        {{-- 過去の場合は"変更"ボタン --}}
                                         @elseif ($date->lt(\Carbon\Carbon::today()))
                                             <button class="btn btn-primary btn-sm">変更</button>
+                                        {{-- 未来の場合はボタンを表示しない --}}
                                         @else
 
                                         @endif
@@ -59,8 +103,10 @@
                     <div>
                         <a href="{{ Route('attendances.index') }}"><< 前月</a>
                         &ensp;
+                        {{-- 表示している月の末日が今日よりも前ならば過去なのでリンクを付ける --}}
                         @if ($dt->copy()->endOfMonth()->lt(\Carbon\Carbon::today()))
                             <a href="{{ Route('attendances.index') }}">>> 次月</a>
+                        {{-- 今月ならばリンクを付けない --}}
                         @else
                             <span>>> 次月</span>
                         @endif
