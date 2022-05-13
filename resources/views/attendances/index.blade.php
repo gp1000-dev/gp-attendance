@@ -101,11 +101,19 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <div>
-                        <a href="{{ Route('attendances.index') }}"><< 前月</a>
+                        {{-- 前月へのリンク --}}
+                        @php
+                            $beforeMonth = $dt->copy()->addMonths(-1)->format('Y-m');
+                        @endphp
+                        <a href="{{ Route('attendances.index', ['month' => $beforeMonth]) }}"><< 前月</a>
                         &ensp;
                         {{-- 表示している月の末日が今日よりも前ならば過去なのでリンクを付ける --}}
                         @if ($dt->copy()->endOfMonth()->lt(\Carbon\Carbon::today()))
-                            <a href="{{ Route('attendances.index') }}">>> 次月</a>
+                            {{-- 次月へのリンク --}}
+                            @php
+                                $nextMonth = $dt->copy()->addMonths(1)->format('Y-m');
+                            @endphp
+                            <a href="{{ Route('attendances.index', ['month' => $nextMonth]) }}">>> 次月</a>
                         {{-- 今月ならばリンクを付けない --}}
                         @else
                             <span>>> 次月</span>

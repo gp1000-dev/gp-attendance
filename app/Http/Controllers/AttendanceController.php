@@ -26,8 +26,27 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        $month = $request->month;
-        $dt = new Carbon('2022-05-10');
+        /* リクエストパラメータによる日付の指定処理 */
+        $query = null; /* 指定がなければヌルになる */
+        $query = $request->month; /* ?month=の場合受け付ける */
+        /* 正規表現で受け付ける表現を限る */
+        if (preg_match('/^[0-9]{4}\-[0-9]{2}$/', $query)){
+            /* 年と月に分割する */
+            $date = explode("-", $query);
+            /* 1年1月から昨年の12月までを受け付ける */
+            if ($date[0] >= 1 && $date[0] < Carbon::today()->year && $date[1] >= 1 && $date[1] <= 12) { 
+                $dt = Carbon::createFromDate($date[0], $date[1], 01);
+            /* 今年の1月から今月まで受け付ける */
+            } elseif ($date[0] === (string)Carbon::today()->year && $date[1] >= 1 && $date[1] <= Carbon::today()->month) {
+                $dt = Carbon::createFromDate($date[0], $date[1], 01);
+            /* 未来は弾く */
+            } else {
+                $dt = Carbon::today();
+            }
+        /* 正規表現で弾かれたら今日を指定したことにする */
+        } else {
+            $dt = Carbon::today();
+        }
 
         /* 1月分のデータを取得する */
         $attendances = Attendance::where('user_id', Auth::user()->id)
