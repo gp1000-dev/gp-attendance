@@ -88,7 +88,9 @@
                                     </td>
                                 </tr>
                                 @php
-                                    $totalWorkMinutes += ($attendance->workTime()->hour * 60 + $attendance->workTime()->minute);
+                                    if (!is_null($attendance) && $attendance->attended) {
+                                        $totalWorkMinutes += ($attendance->workTime()->hour * 60 + $attendance->workTime()->minute);
+                                    }
                                 @endphp
                             @endforeach
                             <tr>
