@@ -25,6 +25,7 @@
                                     $dt->copy()->startOfMonth(),
                                     $dt->copy()->endOfMonth()
                                 );
+                                $totalWorkMinutes = 0;
                             @endphp
                             {{-- 1日づつ処理する --}}
                             @foreach ($period as $date)
@@ -86,13 +87,16 @@
                                         @endif
                                     </td>
                                 </tr>
+                                @php
+                                    $totalWorkMinutes += ($attendance->workTime()->hour * 60 + $attendance->workTime()->minute);
+                                @endphp
                             @endforeach
                             <tr>
                                 <td>当月計</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>{{ '110:00' }}</td>
+                                <td>{{floor($totalWorkMinutes / 60)}}:{{sprintf('%02d', $totalWorkMinutes % 60)}}</td>
                                 <td></td>
                                 <td></td>
                             </tr>
