@@ -38,10 +38,7 @@ Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update
  * 管理者画面
  */
 Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
-    Auth::routes([
-        'register' => false,
-        // 'verify' => true,
-    ]);
+    Auth::routes(['verify' => true]);
 
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
 });

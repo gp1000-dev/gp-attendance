@@ -45,6 +45,12 @@
                                     <a class="nav-link" href="{{ route('admin.login') }}">ログイン</a>
                                 </li>
                             @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.register') }}">新規登録</a>
+                                </li>
+                            @endif
                         @else
                             <li class="nav-item dropdown">
 
