@@ -24,7 +24,7 @@
                                 <tr>
                                     <th class="text-start">開始時刻</th>
                                     <td>
-                                        <select name="start_time">
+                                        <select id="start_time" name="start_time">
                                             <option value="13:00" selected>13:00</option>
                                             <option value="13:30">13:30</option>
                                             <option value="14:00">14:00</option>
@@ -42,7 +42,7 @@
                                 <tr>
                                     <th class="text-start">終了時刻</th>
                                     <td>
-                                        <select name="end_time">
+                                        <select id="end_time" name="end_time">
                                             <option value="13:00">13:00</option>
                                             <option value="13:30">13:30</option>
                                             <option value="14:00">14:00</option>
@@ -77,4 +77,24 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+let start_time = document.getElementById('start_time');
+let end_time = document.getElementById('end_time');
+let absence = document.getElementById('absence');
+
+function specifyTime() {
+    if (absence.checked) {
+        start_time.disabled = true;
+        end_time.disabled = true;
+    } else {
+        start_time.disabled = false;
+        end_time.disabled = false;
+    }
+}
+
+absence.addEventListener('change', specifyTime);
+</script>
 @endsection
