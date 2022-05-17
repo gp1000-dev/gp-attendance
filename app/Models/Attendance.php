@@ -57,7 +57,7 @@ class Attendance extends Model
         $endTime = new Carbon($this->end_time);
         $diff = $endTime->diffInMinutes($startTime);
 
-        $workHours = $diff / 60;
+        $workHours = floor($diff / 60);
         $workMinutes = $diff % 60;
         $workTimes = $workHours . ':' . $workMinutes;
 
