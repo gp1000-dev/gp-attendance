@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
+use Carbon\Carbon;
+
 class Attendance extends Model
 {
     use HasFactory;
@@ -42,5 +44,23 @@ class Attendance extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Caluculate working times
+     *
+     * @return \Carbon\Carbon
+     */
+    public function workTime()
+    {
+        $startTime = new Carbon($this->start_time);
+        $endTime = new Carbon($this->end_time);
+        $diff = $endTime->diffInMinutes($startTime);
+
+        $workHours = floor($diff / 60);
+        $workMinutes = $diff % 60;
+        $workTimes = $workHours . ':' . $workMinutes;
+
+        return new Carbon($workTimes);
     }
 }
