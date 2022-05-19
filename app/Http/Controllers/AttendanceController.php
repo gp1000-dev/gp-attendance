@@ -44,7 +44,7 @@ class AttendanceController extends Controller
             $dt = Carbon::today();
         }
 
-        /* 1月分のデータを取得する */
+        /* 1ヶ月分のデータを取得する */
         $attendances = Attendance::where('user_id', Auth::user()->id)
             ->where('date', '>=', $dt->copy()->startOfMonth())
             ->where('date', '<=', $dt->copy()->endOfMonth())
