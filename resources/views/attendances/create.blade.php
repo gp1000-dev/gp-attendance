@@ -12,11 +12,12 @@
                     <div class="card-body">
                         <table class="table table-borderless">
                             <tbody>
+                                @php
+                                    $date = \Carbon\Carbon::today();
+                                    $period = \Carbon\CarbonPeriod::create('09:00:00', '18:00:00')->minutes(30)->toArray();
+                                @endphp
                                 <tr>
                                     <th class="text-start">日付</th>
-                                    @php
-                                        $date = \Carbon\Carbon::today();
-                                    @endphp
                                     <td>
                                         {{ $date->isoFormat('Y年M月D日（ddd）') }}
                                     </td>
@@ -25,17 +26,9 @@
                                     <th class="text-start">開始時刻</th>
                                     <td>
                                         <select id="start_time" name="start_time">
-                                            <option value="13:00" selected>13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00">18:00</option>
+                                            @foreach ($period as $time)
+                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create('13:00:00')) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
@@ -43,17 +36,9 @@
                                     <th class="text-start">終了時刻</th>
                                     <td>
                                         <select id="end_time" name="end_time">
-                                            <option value="13:00">13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00" selected>18:00</option>
+                                            @foreach ($period as $time)
+                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create('18:00:00')) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
