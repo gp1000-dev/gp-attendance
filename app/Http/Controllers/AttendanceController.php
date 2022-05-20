@@ -56,7 +56,7 @@ class AttendanceController extends Controller
     /**
      * show attendance create page.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -78,5 +78,16 @@ class AttendanceController extends Controller
         } else {
             return redirect()->route('attendances.index');
         }
+    }
+
+    /**
+     * Store attendance data.
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+
+        return redirect()->route('attendances.index');
     }
 }

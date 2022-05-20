@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('attendances.store') }}">
                     @csrf
 
                     <div class="card-header">勤怠入力</div>

@@ -36,3 +36,4 @@ Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update
 Route::get('/attendances', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendances.index');
 /* attendance create page */
 Route::get('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'create'])->name('attendances.create');
+Route::post('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendances.store');
