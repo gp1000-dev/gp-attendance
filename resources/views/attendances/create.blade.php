@@ -13,13 +13,12 @@
                         <table class="table table-borderless">
                             <tbody>
                                 @php
-                                    $date = \Carbon\Carbon::today();
                                     $period = \Carbon\CarbonPeriod::create('09:00:00', '18:00:00')->minutes(30)->toArray();
                                 @endphp
                                 <tr>
                                     <th class="text-start">日付</th>
                                     <td>
-                                        {{ $date->isoFormat('Y年M月D日（ddd）') }}
+                                        {{ $dt->isoFormat('Y年M月D日（ddd）') }}
                                     </td>
                                 </tr>
                                 <tr>

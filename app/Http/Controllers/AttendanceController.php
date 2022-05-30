@@ -56,7 +56,7 @@ class AttendanceController extends Controller
     /**
      * show attendance create page.
      *
-     * @return Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\Support\Renderable|Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -68,9 +68,10 @@ class AttendanceController extends Controller
             /* 日付型に変換する */
             $date = explode("-", $query);
             $dt = Carbon::create($date[0], $date[1], $date[2], 0, 0, 0);
-            /* 今日の日付だった場合のみビューに渡す */
-            if ($dt->eq(Carbon::today())) {
-                return view('attendances/create');
+            /* DBにレコードが存在しない日付の場合のみ登録画面に遷移する */
+            if (!Attendance::where('user_id', Auth::user()->id)
+            ->where('date', $dt)->exists()) {
+                return view('attendances/create', compact('dt'));
             } else {
             /* 勤怠表示画面に戻す */
                 return redirect()->route('attendances.index');
