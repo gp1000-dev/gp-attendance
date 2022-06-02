@@ -95,7 +95,7 @@ class AttendanceController extends Controller
     public function store(AttendanceRequest $request)
     {
         /* 未来だったら弾く */
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $request->date);
+        $date = Carbon::createFromFormat('Y-m-d', $request->date);
         if ($date->gt(Carbon::today())) {
             abort(403);
         }
