@@ -44,12 +44,13 @@
                                 <tr>
                                     <th class="text-start"></th>
                                     <td>
-                                        <input type="checkbox" id="absence" name="absence">
+                                        <input type="checkbox" id="absence" name="absence" value="absence">
                                         <label for="absence">休業にする</label>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <input type="hidden" name="date" value="{{ $dt }}">
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">

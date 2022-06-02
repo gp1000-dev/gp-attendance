@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Carbon\Carbon;
 
+use App\Http\Requests\AttendanceRequest;
+
 class AttendanceController extends Controller
 {
     /**
@@ -86,8 +88,42 @@ class AttendanceController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AttendanceRequest $request)
     {
+        /* 終了時刻が開始時刻よりも前だったら弾く */
+        if (strcmp($request->end_time, $request->start_time) > 0) {
+            /* DBに勤務登録があった場合は弾く */
+            if (!Attendance::where('user_id', Auth::user()->id)
+                ->where('date', $request->date)->exists()) {
+                    $attendance = new Attendance();
+                    /* ユーザーID */
+                    $attendance->user_id = Auth::user()->id;
+                    /* 日付 */
+                    $attendance->date = $request->date;
+                    /* 欠勤の場合 */
+                    if (isset($request->absence)) {
+                        /* 出勤はfalse */
+                        $attendance->attended = false;
+                        /* 開始時刻はnull */
+                        $attendance->start_time = null;
+                        /* 終了時刻はnull */
+                        $attendance->end_time = null;
+                    } else {
+                    /* 出勤の場合 */
+                        /* 出勤はtrue */
+                        $attendance->attended = true;
+                        /* 開始時刻 */
+                        $attendance->start_time = $request->start_time;
+                        /* 終了時刻 */
+                        $attendance->end_time = $request->end_time;
+                    }
+                    /* コメント */
+                    $attendance->comment = null;
+
+                    /* DBに登録する */
+                    $attendance->save();
+                }
+        }
 
         return redirect()->route('attendances.index');
     }
