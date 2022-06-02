@@ -18,7 +18,7 @@
                                 <tr>
                                     <th class="text-start">日付</th>
                                     <td>
-                                        {{ $dt->isoFormat('Y年M月D日（ddd）') }}
+                                        {{ $dt->copy()->isoFormat('Y年M月D日（ddd）') }}
                                     </td>
                                 </tr>
                                 <tr>

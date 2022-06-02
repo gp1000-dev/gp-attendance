@@ -70,17 +70,18 @@ class AttendanceController extends Controller
             /* 日付型に変換する */
             $date = explode("-", $query);
             $dt = Carbon::create($date[0], $date[1], $date[2], 0, 0, 0);
-            /* DBにレコードが存在しない日付の場合のみ登録画面に遷移する */
-            if (!Attendance::where('user_id', Auth::user()->id)
-            ->where('date', $dt)->exists()) {
-                return view('attendances/create', compact('dt'));
-            } else {
-            /* 勤怠表示画面に戻す */
-                return redirect()->route('attendances.index');
+            /* 未来ではないことを確認する */
+            if ($dt->lte(Carbon::today())) {
+                /* DBにレコードが存在しない日付の場合のみ登録画面に遷移する */
+                if (!Attendance::where('user_id', Auth::user()->id)
+                ->where('date', $dt)->exists()) {
+                    return view('attendances/create', compact('dt'));
+                }
             }
-        } else {
-            return redirect()->route('attendances.index');
         }
+
+        /* 勤怠表示画面に戻す */
+        return redirect()->route('attendances.index');
     }
 
     /**
@@ -90,10 +91,13 @@ class AttendanceController extends Controller
      */
     public function store(AttendanceRequest $request)
     {
-        /* 終了時刻が開始時刻よりも前だったら弾く */
-        if (strcmp($request->end_time, $request->start_time) > 0) {
-            /* DBに勤務登録があった場合は弾く */
-            if (!Attendance::where('user_id', Auth::user()->id)
+        /* 未来ではないことを確認する */
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $request->date);
+        if ($date->lte(Carbon::today())) {
+            /* 終了時刻が開始時刻よりも前だったら弾く */
+            if (strcmp($request->end_time, $request->start_time) > 0) {
+                /* DBに勤務登録があった場合は弾く */
+                if (!Attendance::where('user_id', Auth::user()->id)
                 ->where('date', $request->date)->exists()) {
                     $attendance = new Attendance();
                     /* ユーザーID */
@@ -109,7 +113,7 @@ class AttendanceController extends Controller
                         /* 終了時刻はnull */
                         $attendance->end_time = null;
                     } else {
-                    /* 出勤の場合 */
+                        /* 出勤の場合 */
                         /* 出勤はtrue */
                         $attendance->attended = true;
                         /* 開始時刻 */
@@ -123,8 +127,10 @@ class AttendanceController extends Controller
                     /* DBに登録する */
                     $attendance->save();
                 }
+            }
         }
 
+        /* 勤怠表示画面に戻す */
         return redirect()->route('attendances.index');
     }
 }
