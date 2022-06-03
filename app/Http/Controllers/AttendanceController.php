@@ -71,7 +71,7 @@ class AttendanceController extends Controller
 
         /* 日付型に変換する */
         $date = explode("-", $query);
-        $dt = Carbon::create($date[0], $date[1], $date[2], 0, 0, 0);
+        $dt = Carbon::create($date[0], $date[1], $date[2]);
         /* 未来だったら弾く */
         if ($dt->gt(Carbon::today())) {
             abort(403);
@@ -95,7 +95,7 @@ class AttendanceController extends Controller
     public function store(AttendanceRequest $request)
     {
         /* 未来だったら弾く */
-        $date = Carbon::createFromFormat('Y-m-d', $request->date);
+        $date = Carbon::parse($request->date);
         if ($date->gt(Carbon::today())) {
             abort(403);
         }
