@@ -140,6 +140,9 @@ return [
         '属性名' => [
             'ルール名' => 'カスタムメッセージ',
         ],
+        'end_time' => [
+            'after' => ':attributeには、:dateより後の時刻を指定してください。',
+        ],
     ],
 
     /*
@@ -164,6 +167,8 @@ return [
         'birthdate_year' => '誕生年',
         'birthdate_month' => '誕生月',
         'birthdate_day' => '誕生日',
+        'start_time' => '開始時刻',
+        'end_time' => '終了時刻',
     ],
 
 ];

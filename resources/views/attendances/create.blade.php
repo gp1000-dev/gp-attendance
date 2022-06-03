@@ -3,6 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $message)
+                    <ul>
+                        <li>{{ $message }}</li>
+                    </ul>
+                @endforeach
+            </div>
+        @endif
         <div class="col-md-8">
             <div class="card">
                 <form method="POST" action="{{ route('attendances.store') }}">

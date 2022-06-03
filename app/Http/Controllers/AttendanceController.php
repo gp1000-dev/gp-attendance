@@ -100,11 +100,6 @@ class AttendanceController extends Controller
             abort(403);
         }
 
-        /* 終了時刻が開始時刻よりも前だったら弾く */
-        if (strcmp($request->end_time, $request->start_time) <= 0) {
-            abort(403);
-        }
-
         /* DBに勤務登録があった場合は弾く */
         if (Attendance::where('user_id', Auth::user()->id)
         ->where('date', $request->date)->exists()) {

@@ -27,7 +27,7 @@ class AttendanceRequest extends FormRequest
             'date' => 'required|date',
             'absence' => 'string',
             'start_time' => 'string',
-            'end_time' => 'string',
+            'end_time' => 'string|after:start_time',
         ];
     }
 }
