@@ -57,6 +57,12 @@
                                         <label for="absence">休業にする</label>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th class="text-start">備考</th>
+                                    <td>
+                                        <textarea name="comment" id="comment" cols="30" rows="4"></textarea>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <input type="hidden" name="date" value="{{ $dt }}">
