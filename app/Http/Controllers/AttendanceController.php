@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Carbon\Carbon;
 
+use App\Http\Requests\AttendanceRequest;
+
 class AttendanceController extends Controller
 {
     /**
@@ -62,21 +64,77 @@ class AttendanceController extends Controller
     {
         $query = null; /* クエリがなければヌルになる */
         $query = $request->date; /* ?date=のみ受け付ける */
-
         /* 正規表現で年月日の形式か判定する */
-        if (preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/', $query)) {
-            /* 日付型に変換する */
-            $date = explode("-", $query);
-            $dt = Carbon::create($date[0], $date[1], $date[2], 0, 0, 0);
-            /* 今日の日付だった場合のみビューに渡す */
-            if ($dt->eq(Carbon::today())) {
-                return view('attendances/create');
-            } else {
-            /* 勤怠表示画面に戻す */
-                return redirect()->route('attendances.index');
-            }
-        } else {
-            return redirect()->route('attendances.index');
+        if (!preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/', $query)) {
+            abort(403);
         }
+
+        /* 日付型に変換する */
+        $dt = Carbon::parse($query);
+        /* 未来だったら弾く */
+        if ($dt->gt(Carbon::today())) {
+            abort(403);
+        }
+
+        /* DBにレコードが存在する日付は弾く */
+        if (Attendance::where('user_id', Auth::user()->id)
+        ->where('date', $dt)->exists()) {
+            abort(403);
+        }
+
+        /* 登録画面に遷移する */
+        return view('attendances/create', compact('dt'));
+    }
+
+    /**
+     * Store attendance data.
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function store(AttendanceRequest $request)
+    {
+        /* 未来だったら弾く */
+        $date = Carbon::parse($request->date);
+        if ($date->gt(Carbon::today())) {
+            abort(403);
+        }
+
+        /* DBに勤務登録があった場合は弾く */
+        if (Attendance::where('user_id', Auth::user()->id)
+        ->where('date', $request->date)->exists()) {
+            abort(403);
+        }
+
+        /* 勤怠登録 */
+        $attendance = new Attendance();
+        /* ユーザーID */
+        $attendance->user_id = Auth::user()->id;
+        /* 日付 */
+        $attendance->date = $request->date;
+        if (isset($request->absence)) {
+            /* 欠勤の場合 */
+            /* 出勤はfalse */
+            $attendance->attended = false;
+            /* 開始時刻はnull */
+            $attendance->start_time = null;
+            /* 終了時刻はnull */
+            $attendance->end_time = null;
+        } else {
+            /* 出勤の場合 */
+            /* 出勤はtrue */
+            $attendance->attended = true;
+            /* 開始時刻 */
+            $attendance->start_time = $request->start_time;
+            /* 終了時刻 */
+            $attendance->end_time = $request->end_time;
+        }
+        /* コメント */
+        $attendance->comment = null;
+
+        /* DBに登録する */
+        $attendance->save();
+
+        /* 勤怠表示画面に戻す */
+        return redirect()->route('attendances.index');
     }
 }

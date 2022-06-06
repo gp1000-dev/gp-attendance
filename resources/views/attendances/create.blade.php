@@ -3,39 +3,40 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $message)
+                    <ul>
+                        <li>{{ $message }}</li>
+                    </ul>
+                @endforeach
+            </div>
+        @endif
         <div class="col-md-8">
             <div class="card">
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('attendances.store') }}">
                     @csrf
 
                     <div class="card-header">勤怠入力</div>
                     <div class="card-body">
                         <table class="table table-borderless">
                             <tbody>
+                                @php
+                                    $period = \Carbon\CarbonPeriod::create('09:00:00', '18:00:00')->minutes(30)->toArray();
+                                @endphp
                                 <tr>
                                     <th class="text-start">日付</th>
-                                    @php
-                                        $date = \Carbon\Carbon::today();
-                                    @endphp
                                     <td>
-                                        {{ $date->isoFormat('Y年M月D日（ddd）') }}
+                                        {{ $dt->copy()->isoFormat('Y年M月D日（ddd）') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="text-start">開始時刻</th>
                                     <td>
                                         <select id="start_time" name="start_time">
-                                            <option value="13:00" selected>13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00">18:00</option>
+                                            @foreach ($period as $time)
+                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create('13:00:00')) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
@@ -43,29 +44,22 @@
                                     <th class="text-start">終了時刻</th>
                                     <td>
                                         <select id="end_time" name="end_time">
-                                            <option value="13:00">13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00" selected>18:00</option>
+                                            @foreach ($period as $time)
+                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create('18:00:00')) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th class="text-start"></th>
                                     <td>
-                                        <input type="checkbox" id="absence" name="absence">
+                                        <input type="checkbox" id="absence" name="absence" value="absence">
                                         <label for="absence">休業にする</label>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <input type="hidden" name="date" value="{{ $dt }}">
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">
