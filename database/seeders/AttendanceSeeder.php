@@ -23,17 +23,30 @@ class AttendanceSeeder extends Seeder
         // 3ヶ月前〜1日前 の勤怠データ作成
         collect(CarbonPeriod::create($thisMonth->clone()->addMonth(-3), Carbon::today()->addDay(-1))->toArray())
             ->map(function ($day) use ($user) {
-                $isWorkDay = !in_array($day->dayOfWeek, [0, 3, 6]);
-                $attended = $isWorkDay && (rand(0, 4) < 4) || !$isWorkDay && (rand(0, 4) === 0);
-                Attendance::factory()
-                    ->for($user)
-                    ->create([
-                        'date' => $day,
-                        'attended' => $attended,
-                        'start_time' => $attended ? Carbon::parse('13:00') : null,
-                        'end_time' => $attended ? Carbon::parse('18:00') : null,
-                        'comment' => $isWorkDay && !$attended ? '休暇' : (!$isWorkDay && $attended ? '休日出勤' : null),
-                    ]);
+                $comment = null;
+                // 月・火・木・金は出勤
+                $status = in_array($day->dayOfWeek, [1, 2, 4, 5]) ? 'ON' : null;
+                // 月は2週に一度欠勤
+                if ($day->dayOfWeek === 1 && $day->weekOfMonth % 2 === 0) {
+                    $status = 'OFF';
+                    $comment = '休暇';
+                }
+                // 土は2週に一度出勤
+                if ($day->dayOfWeek === 6 && $day->weekOfMonth % 2 === 1) {
+                    $status = 'ON';
+                    $comment = '休日出勤';
+                }
+                if (!is_null($status)) {
+                    Attendance::factory()
+                        ->for($user)
+                        ->create([
+                            'date' => $day,
+                            'attended' => $status === 'ON' ? true : false,
+                            'start_time' => $status === 'ON' ? Carbon::parse('13:00') : null,
+                            'end_time' => $status === 'ON' ? Carbon::parse('18:00') : null,
+                            'comment' => $comment,
+                        ]);
+                }
             });
     }
 }
