@@ -66,12 +66,12 @@
                                         {{ $attendance ? ($attendance->end_time ? $attendance->end_time->format('H:i') : '') : '' }}
                                     </td>
                                     <td>
-                                        {{-- 出席の場合は勤務時間をメッソドで求める --}}
+                                        {{-- 出席の場合は勤務時間をメソッドで求める --}}
                                         {{ $attendance ? ($attendance->attended ? $attendance->workTime()->format('H:i') : '') : '' }}
                                     </td>
                                     <td>
                                         {{-- コメント(備考) --}}
-                                        {{ $attendance ? ($attendance->comment ? $attendance->comment : '') : '' }}
+                                        {{ $attendance ? $attendance->comment : '' }}
                                     </td>
                                     <td>
                                         {{-- ボタンの表示 --}}

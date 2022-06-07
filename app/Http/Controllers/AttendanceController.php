@@ -129,7 +129,7 @@ class AttendanceController extends Controller
             $attendance->end_time = $request->end_time;
         }
         /* コメント */
-        $attendance->comment = null;
+        $attendance->comment = $request->comment;
 
         /* DBに登録する */
         $attendance->save();
