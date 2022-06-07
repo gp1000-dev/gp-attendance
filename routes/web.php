@@ -37,3 +37,5 @@ Route::get('/attendances', [App\Http\Controllers\AttendanceController::class, 'i
 /* attendance create page */
 Route::get('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'create'])->name('attendances.create');
 Route::post('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendances.store');
+/* attendance edit page */
+Route::get('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'edit'])->name('attendances.edit');
