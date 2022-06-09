@@ -137,4 +137,39 @@ class AttendanceController extends Controller
         /* 勤怠表示画面に戻す */
         return redirect()->route('attendances.index');
     }
+
+    /**
+     * Show attendance edit page
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function edit(Request $request)
+    {
+        $query = null; /* クエリがなければヌルになる */
+        $query = $request->date; /* ?date=のみ受け付ける */
+        /* 正規表現で年月日の形式か判定する */
+        if (!preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/', $query)) {
+            abort(403);
+        }
+
+        /* 日付型に変換する */
+        $dt = Carbon::parse($query);
+        /* 未来だったら不正 */
+        if ($dt->gt(Carbon::today())) {
+            abort(403);
+        }
+
+        /* 1日分のデータを取得する */
+        $attendance = Attendance::where('user_id', Auth::user()->id)
+            ->where('date', $dt)
+            ->first();
+
+        /* DBにレコードが存在しない日付は不正 */
+        if (is_null($attendance)) {
+            abort(403);
+        }
+
+        /* 編集画面に遷移する */
+        return view('attendances/edit', compact('dt', 'attendance'));
+    }
 }
