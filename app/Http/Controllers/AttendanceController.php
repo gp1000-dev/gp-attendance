@@ -160,7 +160,6 @@ class AttendanceController extends Controller
         }
 
         /* 1日分のデータを取得する */
-        $attendance = null;
         $attendance = Attendance::where('user_id', Auth::user()->id)
             ->where('date', $dt)
             ->first();
