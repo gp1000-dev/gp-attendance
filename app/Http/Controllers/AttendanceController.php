@@ -159,16 +159,16 @@ class AttendanceController extends Controller
             abort(403);
         }
 
-        /* DBにレコードが存在しない日付は不正 */
-        if (!Attendance::where('user_id', Auth::user()->id)
-        ->where('date', $dt)->exists()) {
-            abort(403);
-        }
-
         /* 1日分のデータを取得する */
+        $attendance = null;
         $attendance = Attendance::where('user_id', Auth::user()->id)
             ->where('date', $dt)
             ->first();
+
+        /* DBにレコードが存在しない日付は不正 */
+        if (is_null($attendance)) {
+            abort(403);
+        }
 
         /* 編集画面に遷移する */
         return view('attendances/edit', compact('dt', 'attendance'));
