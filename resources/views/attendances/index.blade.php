@@ -75,13 +75,16 @@
                                     </td>
                                     <td>
                                         {{-- ボタンの表示 --}}
-                                        {{-- 今日の場合は"登録"ボタン --}}
-                                        @if ($date->eq(\Carbon\Carbon::today()))
-                                            <button class="btn btn-primary btn-sm">登録</button>
-                                        {{-- 過去の場合は"変更"ボタン --}}
-                                        @elseif ($date->lt(\Carbon\Carbon::today()))
-                                            <button class="btn btn-primary btn-sm">変更</button>
-                                        {{-- 未来の場合はボタンを表示しない --}}
+                                        {{-- 過去か今日の場合はボタンを表示する --}}
+                                        @if ($date->lte(\Carbon\Carbon::today()))
+                                            {{-- 登録が無ければ"登録"ボタン --}}
+                                            @if (is_null($attendance))
+                                                <a href="{{ route('attendances.create', ['date' => $date->format('Y-m-d')]) }}" class="btn btn-primary btn-sm">登録</a>
+                                            {{-- 登録があれば"変更"ボタン --}}
+                                            @else
+                                                <a href="{{ route('attendances.edit', ['date' => $date->format('Y-m-d')]) }}" class="btn btn-secondary btn-sm">変更</a>
+                                            @endif
+                                        {{-- 未来の場合はボタンの表示しない --}}
                                         @else
 
                                         @endif
