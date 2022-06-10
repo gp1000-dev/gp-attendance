@@ -22,9 +22,16 @@
                         <table class="table table-borderless">
                             <tbody>
                                 @php
-                                    $period = \Carbon\CarbonPeriod::create('09:00:00', '18:00:00')->minutes(30)->toArray();
-                                    $start_time = is_null($attendance->start_time) ? \Carbon\Carbon::create('13:00:00') : $attendance->start_time;
-                                    $end_time = is_null($attendance->end_time) ? \Carbon\Carbon::create('18:00:00') : $attendance->end_time;
+                                    $defaultStartTime = config('app.attendance.default_start_time');
+                                    $defaultEndTime = config('app.attendance.default_end_time');
+                                    $minStartTime = config('app.attendance.min_start_time');
+                                    $maxEndTime = config('app.attendance.max_end_time');
+                                    $timeDuration = \Carbon\Carbon::create(config('app.attendance.time_duration'));
+                                    $timeDurationMinutes = $timeDuration->hour * 60 + $timeDuration->minute;
+
+                                    $period = \Carbon\CarbonPeriod::create($minStartTime, $maxEndTime)->minutes($timeDurationMinutes)->toArray();
+                                    $start_time = is_null($attendance->start_time) ? \Carbon\Carbon::create($defaultStartTime) : $attendance->start_time;
+                                    $end_time = is_null($attendance->end_time) ? \Carbon\Carbon::create($defaultEndTime) : $attendance->end_time;
                                 @endphp
                                 <tr>
                                     <th class="text-start">日付</th>
