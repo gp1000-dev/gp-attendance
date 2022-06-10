@@ -22,14 +22,14 @@
                         <table class="table table-borderless">
                             <tbody>
                                 @php
-                                    $default_start_time = config('app.attendance.default_start_time');
-                                    $default_end_time = config('app.attendance.default_end_time');
-                                    $min_start_time = config('app.attendance.min_start_time');
-                                    $max_end_time = config('app.attendance.max_end_time');
-                                    $time_duration = \Carbon\Carbon::create(config('app.attendance.time_duration'));
-                                    $time_duration_minutes = $time_duration->hour * 60 + $time_duration->minute;
+                                    $defaultStartTime = config('app.attendance.default_start_time');
+                                    $defaultEndTime = config('app.attendance.default_end_time');
+                                    $minStartTime = config('app.attendance.min_start_time');
+                                    $maxEndTime = config('app.attendance.max_end_time');
+                                    $timeDuration = \Carbon\Carbon::create(config('app.attendance.time_duration'));
+                                    $timeDurationMinutes = $timeDuration->hour * 60 + $timeDuration->minute;
 
-                                    $period = \Carbon\CarbonPeriod::create($min_start_time, $max_end_time)->minutes($time_duration_minutes)->toArray();
+                                    $period = \Carbon\CarbonPeriod::create($minStartTime, $maxEndTime)->minutes($timeDurationMinutes)->toArray();
                                 @endphp
                                 <tr>
                                     <th class="text-start">日付</th>
@@ -42,7 +42,7 @@
                                     <td>
                                         <select id="start_time" name="start_time">
                                             @foreach ($period as $time)
-                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create($default_start_time)) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create($defaultStartTime)) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -52,7 +52,7 @@
                                     <td>
                                         <select id="end_time" name="end_time">
                                             @foreach ($period as $time)
-                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create($default_end_time)) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create($defaultEndTime)) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
                                             @endforeach
                                         </select>
                                     </td>
