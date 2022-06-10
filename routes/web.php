@@ -39,3 +39,4 @@ Route::get('/attendances/add', [App\Http\Controllers\AttendanceController::class
 Route::post('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendances.store');
 /* attendance edit page */
 Route::get('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'edit'])->name('attendances.edit');
+Route::post('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'update'])->name('attendances.update');
