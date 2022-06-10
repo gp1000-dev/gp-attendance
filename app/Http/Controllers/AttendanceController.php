@@ -196,28 +196,37 @@ class AttendanceController extends Controller
             abort(403);
         }
 
-        if (isset($request->absence)) {
-            /* 欠勤の場合 */
-            /* 出勤はfalse */
-            $attendance->attended = false;
-            /* 開始時刻はnull */
-            $attendance->start_time = null;
-            /* 終了時刻はnull */
-            $attendance->end_time = null;
-        } else {
-            /* 出勤の場合 */
-            /* 出勤はtrue */
-            $attendance->attended = true;
-            /* 開始時刻 */
-            $attendance->start_time = $request->start_time;
-            /* 終了時刻 */
-            $attendance->end_time = $request->end_time;
-        }
-        /* コメント */
-        $attendance->comment = $request->comment;
+        /* 更新ボタンが押された場合の処理 */
+        if ($request->has('update')) {
+            if (isset($request->absence)) {
+                /* 欠勤の場合 */
+                /* 出勤はfalse */
+                $attendance->attended = false;
+                /* 開始時刻はnull */
+                $attendance->start_time = null;
+                /* 終了時刻はnull */
+                $attendance->end_time = null;
+            } else {
+                /* 出勤の場合 */
+                /* 出勤はtrue */
+                $attendance->attended = true;
+                /* 開始時刻 */
+                $attendance->start_time = $request->start_time;
+                /* 終了時刻 */
+                $attendance->end_time = $request->end_time;
+            }
+            /* コメント */
+            $attendance->comment = $request->comment;
 
-        /* DBに登録する */
-        $attendance->save();
+            /* DBに登録する */
+            $attendance->save();
+        }
+
+        /* 取消ボタンが押された場合の処理 */
+        if ($request->has('reset')) {
+            /* レコードを削除する */
+            $attendance->delete();
+        }
 
         /* 勤怠表示画面に戻す */
         return redirect()->route('attendances.index');
