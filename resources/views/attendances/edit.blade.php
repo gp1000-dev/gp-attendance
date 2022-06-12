@@ -76,9 +76,12 @@
                         </table>
                         <input type="hidden" name="date" value="{{ $dt }}">
                     </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">
+                    <div class="card-footer d-flex justify-content-between">
+                        <button type="submit" name="update" class="btn btn-primary">
                             更新
+                        </button>
+                        <button type="submit" name="reset" class="btn btn-primary">
+                            取消
                         </button>
                     </div>
                 </form>
