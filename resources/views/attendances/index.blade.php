@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">{{ $dt->year }}年{{ $dt->month }}月 の勤怠</div>
