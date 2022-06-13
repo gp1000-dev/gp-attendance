@@ -78,7 +78,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <button type="submit" name="update" class="btn btn-primary">
-                            更新
+                            変更
                         </button>
                         <button type="submit" name="reset" class="btn btn-primary">
                             取消

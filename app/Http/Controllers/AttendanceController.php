@@ -221,7 +221,7 @@ class AttendanceController extends Controller
             /* DBに登録する */
             $attendance->save();
 
-            return redirect()->route('attendances.index')->with('message', '更新しました。');
+            return redirect()->route('attendances.index')->with('message', '変更しました。');
         }
 
         /* 取消ボタンが押された場合の処理 */
@@ -229,7 +229,7 @@ class AttendanceController extends Controller
             /* レコードを削除する */
             $attendance->delete();
 
-            return redirect()->route('attendances.index')->with('message', '削除しました。');
+            return redirect()->route('attendances.index')->with('message', '取消しました。');
         }
 
         /* 勤怠表示画面に戻す */
