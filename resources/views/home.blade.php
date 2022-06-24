@@ -8,7 +8,7 @@
 
              ?>
 
-            <h2>{{$user->last_name}} {{$user->first_name}} さん こんにちは！</h2>
+            <h2>{{Auth::user()->last_name}} {{Auth::user()->first_name}} さん こんにちは！</h2>
             
             <ul>
                 <li><a href="/user">ユーザー情報</a></li>
