@@ -88,21 +88,14 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
 
 1. migrationとseeederの実行
 
-    テーブルの構築と初期データの投入を行う。（Dockerコンテナが起動した状態で行う）。
+    Dockerコンテナ上で、テーブルの構築と初期データの投入を行う。
 
     ```bash
+    docker-compose exec php-fpm bash
     php artisan migrate
     php artisan db:seed
+    exit
     ```
-
-    - 「No route to host」エラーが発生する場合、Dockerコンテナ内でコマンド実行してください。（仮の対策）
-
-        ```bash
-        docker-compose exec php-fpm bash
-        php artisan migrate
-        php artisan db:seed
-        exit
-        ```
 
 ## 動作確認
 
@@ -110,8 +103,8 @@ Laravelの実習として、GIFT PLACEの勤怠管理システムを作成して
 
 1. Login画面でテストユーザーでログインできることを確認する。（seederによりユーザーのデータが作成されている）
 
-   - email: creator1@example.com
-   - password: P@ssw0rd
+    - email: creator1@example.com
+    - password: P@ssw0rd
 
 1. Mailhog（メールテストサーバ）の動作確認
 
