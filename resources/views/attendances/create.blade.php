@@ -37,6 +37,14 @@
                                         {{ $dt->copy()->isoFormat('Y年M月D日（ddd）') }}
                                     </td>
                                 </tr>
+                                <th>状態</th>
+                                <td>
+                                    <select id="status" name="status"> 
+                                        <option value="" selected>--</option>
+                                        <option value="full">出勤（全日）</option>
+                                        <option value="half">出勤（半日）</option>
+                                        <option value="off">休業</option>
+                                    </select>
                                 <tr>
                                     <th class="text-start">開始時刻</th>
                                     <td>
@@ -55,13 +63,6 @@
                                                 <option value="{{ $time->format('H:i') }}" {{ $time->eq(\Carbon\Carbon::create($defaultEndTime)) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-start"></th>
-                                    <td>
-                                        <input type="checkbox" id="absence" name="absence" value="absence">
-                                        <label for="absence">休業にする</label>
                                     </td>
                                 </tr>
                                 <tr>

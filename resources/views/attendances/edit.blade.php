@@ -40,6 +40,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>状態</th>
+                                    <td>
+                                        <select>
+                                            <option value="" selected>--</option>
+                                            <option value="full">出勤（全日）</option>
+                                            <option value="half">出勤（半日）</option>
+                                            <option value="off">休業</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="text-start">開始時刻</th>
                                     <td>
                                         <select id="start_time" name="start_time">
@@ -57,13 +68,6 @@
                                                 <option value="{{ $time->format('H:i') }}" {{ $time->eq($end_time) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-start"></th>
-                                    <td>
-                                        <input type="checkbox" id="absence" name="absence" value="absence" {{ $attendance->attended ? '' : 'checked' }}>
-                                        <label for="absence">休業にする</label>
                                     </td>
                                 </tr>
                                 <tr>
