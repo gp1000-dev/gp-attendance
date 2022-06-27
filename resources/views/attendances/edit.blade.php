@@ -43,7 +43,8 @@
                                     <th>状態</th>
                                     <td>
                                         <select>
-                                            <option value="full" selected>出勤（全日）</option>
+                                            <option value="" selected>--</option>
+                                            <option value="full">出勤（全日）</option>
                                             <option value="half">出勤（半日）</option>
                                             <option value="off">休業</option>
                                         </select>
