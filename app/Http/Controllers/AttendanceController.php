@@ -32,7 +32,7 @@ class AttendanceController extends Controller
         $query = null; /* 指定がなければヌルになる */
         $query = $request->month; /* ?month=の場合受け付ける */
         /* 正規表現で受け付ける表現を限る */
-        if (preg_match('/^[0-9]{4}\-[0-9]{2}$/', $query)){
+        if (preg_match('/^[0-9]{4}\-[0-9]{2}$/', $query)) {
             /* 年と月に分割する */
             $date = explode("-", $query);
             /* 1年以降の1月から12月までを受け付ける */
@@ -41,7 +41,7 @@ class AttendanceController extends Controller
             } else {
                 $dt = Carbon::today();
             }
-        /* 正規表現で弾かれたら今日を指定したことにする */
+            /* 正規表現で弾かれたら今日を指定したことにする */
         } else {
             $dt = Carbon::today();
         }
@@ -78,7 +78,8 @@ class AttendanceController extends Controller
 
         /* DBにレコードが存在する日付は弾く */
         if (Attendance::where('user_id', Auth::user()->id)
-        ->where('date', $dt)->exists()) {
+            ->where('date', $dt)->exists()
+        ) {
             abort(403);
         }
 
@@ -101,20 +102,23 @@ class AttendanceController extends Controller
 
         /* DBに勤務登録があった場合は弾く */
         if (Attendance::where('user_id', Auth::user()->id)
-        ->where('date', $request->date)->exists()) {
+            ->where('date', $request->date)->exists()
+        ) {
             abort(403);
         }
-
+        if ($request->status === '') {
+            abort(403);
+        }
         /* 勤怠登録 */
         $attendance = new Attendance();
         /* ユーザーID */
         $attendance->user_id = Auth::user()->id;
         /* 日付 */
         $attendance->date = $request->date;
-        if (isset($request->absence)) {
+        if ($request->status === 'off') {
             /* 欠勤の場合 */
             /* 出勤はfalse */
-            $attendance->attended = false;
+            $attendance->status = $request->status;
             /* 開始時刻はnull */
             $attendance->start_time = null;
             /* 終了時刻はnull */
@@ -122,7 +126,7 @@ class AttendanceController extends Controller
         } else {
             /* 出勤の場合 */
             /* 出勤はtrue */
-            $attendance->attended = true;
+            $attendance->status = $request->status;
             /* 開始時刻 */
             $attendance->start_time = $request->start_time;
             /* 終了時刻 */
