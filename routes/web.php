@@ -25,7 +25,7 @@ Route::get('/about', function () {
     return view('pages.about');
 });
 /* User page */
-Route::get('/user/', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
+Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
 /* update password page */
 Route::get('/user/password', [App\Http\Controllers\UserController::class, 'password'])->name('user.password.edit');
 Route::post('/user/password', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.password.update');
@@ -33,6 +33,14 @@ Route::post('/user/password', [App\Http\Controllers\UserController::class, 'upda
 Route::get('/user/update', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 
+/* attendance view page */
+Route::get('/attendances', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendances.index');
+/* attendance create page */
+Route::get('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'create'])->name('attendances.create');
+Route::post('/attendances/add', [App\Http\Controllers\AttendanceController::class, 'store'])->name('attendances.store');
+/* attendance edit page */
+Route::get('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'edit'])->name('attendances.edit');
+Route::post('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'update'])->name('attendances.update');
 
 /**
  * 管理者画面
