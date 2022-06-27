@@ -24,26 +24,38 @@ class AttendanceSeeder extends Seeder
         collect(CarbonPeriod::create($thisMonth->clone()->addMonth(-3), Carbon::today()->addDay(-1))->toArray())
             ->map(function ($day) use ($user) {
                 $comment = null;
-                // 月・火・木・金は出勤
-                $status = in_array($day->dayOfWeek, [1, 2, 4, 5]) ? 'ON' : null;
+                // 月・火・木・金は全日出勤
+                $status = in_array($day->dayOfWeek, [1, 2, 4, 5]) ? 'full' : null;
                 // 月は2週に一度欠勤
                 if ($day->dayOfWeek === 1 && $day->weekOfMonth % 2 === 0) {
-                    $status = 'OFF';
+                    $status = 'off';
                     $comment = '休暇';
                 }
-                // 土は2週に一度出勤
+                // 土は2週に一度半日出勤
                 if ($day->dayOfWeek === 6 && $day->weekOfMonth % 2 === 1) {
-                    $status = 'ON';
+                    $status = 'half';
                     $comment = '休日出勤';
                 }
+                // 開始時刻と終了時刻
+                if ($status === 'full') {
+                    $start_time = Carbon::parse('13:00');
+                    $end_time = Carbon::parse('18:00');
+                } elseif ($status === 'half') {
+                    $start_time = Carbon::parse('13:00');
+                    $end_time = Carbon::parse('16:00');
+                } elseif ($status === 'off') {
+                    $start_time = null;
+                    $end_time = null;
+                }
+                // 登録
                 if (!is_null($status)) {
                     Attendance::factory()
                         ->for($user)
                         ->create([
                             'date' => $day,
-                            'attended' => $status === 'ON' ? true : false,
-                            'start_time' => $status === 'ON' ? Carbon::parse('13:00') : null,
-                            'end_time' => $status === 'ON' ? Carbon::parse('18:00') : null,
+                            'status' => $status,
+                            'start_time' => $start_time,
+                            'end_time' => $end_time,
                             'comment' => $comment,
                         ]);
                 }
