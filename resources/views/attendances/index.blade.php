@@ -59,10 +59,17 @@
                                     <td>{{ $date->isoFormat('D(ddd)') }}</td>
                                     {{-- その日のデータがある場合だけ表示する --}}
                                     <td>
+                                        
                                         {{-- 出席した場合出力する --}}
-                                        {{ $attendance ? ($attendance->status === 'full' ? '全' : '') : '' }}
-                                        {{ $attendance ? ($attendance->status === 'half' ? '半' : '') : '' }}
-                                        {{ $attendance ? ($attendance->status === 'off' ? '休' : '') : '' }}
+                                        @if ($attendance_->status === 'full' )
+                                        全
+                                        @elseif ($attendance_->status === 'half')
+                                        半
+                                        @elseif ($attendance_->status === 'off')
+                                        休
+                                        @else
+                                        
+                                        @endif
                                     </td>
                                     <td>
                                         {{-- 出席時間 --}}
