@@ -21,6 +21,7 @@ class AttendanceFactory extends Factory
             'user_id' => User::factory(),
             'date' => $this->faker->datetimeBetween('-1 year', 'today'),
             'attended' => $this->faker->boolean(80),
+            'status' => $this->faker->randomElement(['full', 'half', 'off']),
             'start_time' => $startTime,
             'end_time' => $this->faker->datetimeBetween($startTime, Carbon::parse('21:00')),
             'comment' => $this->faker->realText(50),
