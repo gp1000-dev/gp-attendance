@@ -14,7 +14,7 @@
         @endif
         <div class="col-md-8">
             <div class="card">
-                <form method="POST" action="{{ route('attendances.update') }}">
+                <form method="POST">
                     @csrf
 
                     <div class="card-header">勤怠編集</div>
@@ -81,10 +81,10 @@
                         <input type="hidden" name="date" value="{{ $dt }}">
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <button type="submit" name="update" class="btn btn-primary">
+                        <button type="submit" formaction="{{ route('attendances.update') }}" class="btn btn-primary">
                             変更
                         </button>
-                        <button type="submit" name="reset" class="btn btn-primary">
+                        <button type="submit" formaction="{{ route('attendances.delete') }}" class="btn btn-primary">
                             取消
                         </button>
                     </div>
