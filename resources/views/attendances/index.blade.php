@@ -61,15 +61,18 @@
                                     <td>
                                         
                                         {{-- 状態(status)を出力する --}}
-                                        @if ($attendance_->status === 'full' )
-                                        全
-                                        @elseif ($attendance_->status === 'half')
-                                        半
-                                        @elseif ($attendance_->status === 'off')
-                                        休
-                                        @else
-                                        
+                                        @if (isset($attendance))
+                                            @if ($attendance->status === 'full' )
+                                            全
+                                            @elseif ($attendance->status === 'half')
+                                            半
+                                            @elseif ($attendance->status === 'off')
+                                            休
+                                            @else
+                                            
+                                            @endif
                                         @endif
+
                                     </td>
                                     <td>
                                         {{-- 出席時間 --}}
