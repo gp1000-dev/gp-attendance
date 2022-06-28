@@ -25,7 +25,7 @@ class AttendanceRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'absence' => 'string',
+            'status' => 'required',
             'start_time' => 'string',
             'end_time' => 'string|after:start_time',
         ];

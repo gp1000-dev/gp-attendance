@@ -106,10 +106,7 @@ class AttendanceController extends Controller
         ) {
             abort(403);
         }
-        \Log::debug('status=[' . $request->status . ']');
-        if ($request->status === '') {
-            abort(403);
-        }
+
         /* 勤怠登録 */
         $attendance = new Attendance();
         /* ユーザーID */
