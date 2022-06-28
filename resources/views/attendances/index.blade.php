@@ -60,7 +60,7 @@
                                     {{-- その日のデータがある場合だけ表示する --}}
                                     <td>
                                         
-                                        {{-- 出席した場合出力する --}}
+                                        {{-- 状態(status)を出力する --}}
                                         @if ($attendance_->status === 'full' )
                                         全
                                         @elseif ($attendance_->status === 'half')
