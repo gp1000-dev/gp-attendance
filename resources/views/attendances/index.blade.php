@@ -60,7 +60,9 @@
                                     {{-- その日のデータがある場合だけ表示する --}}
                                     <td>
                                         {{-- 出席した場合出力する --}}
-                                        {{ $attendance ? ($attendance->attended ? '出' : '欠') : '' }}
+                                        {{ $attendance ? ($attendance->status === 'full' ? '全' : '') : '' }}
+                                        {{ $attendance ? ($attendance->status === 'half' ? '半' : '') : '' }}
+                                        {{ $attendance ? ($attendance->status === 'off' ? '休' : '') : '' }}
                                     </td>
                                     <td>
                                         {{-- 出席時間 --}}
