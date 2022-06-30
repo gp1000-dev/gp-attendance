@@ -50,4 +50,6 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin.'], f
     Auth::routes(['verify' => true]);
 
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+    /* users view page */
+    Route::get('/users', [App\Http\Controllers\Admin\AdminUsersController::class, 'index'])->name('users.index');
 });
