@@ -169,6 +169,7 @@ return [
         'birthdate_day' => '誕生日',
         'start_time' => '開始時刻',
         'end_time' => '終了時刻',
+        'status' => '状態',
     ],
 
 ];

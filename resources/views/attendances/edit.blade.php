@@ -14,7 +14,7 @@
         @endif
         <div class="col-md-8">
             <div class="card">
-                <form method="POST" action="{{ route('attendances.update') }}">
+                <form method="POST">
                     @csrf
 
                     <div class="card-header">勤怠編集</div>
@@ -40,6 +40,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>状態</th>
+                                    <td>
+                                        <select>
+                                            <option value="" selected>--</option>
+                                            <option value="full">出勤（全日）</option>
+                                            <option value="half">出勤（半日）</option>
+                                            <option value="off">休業</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="text-start">開始時刻</th>
                                     <td>
                                         <select id="start_time" name="start_time">
@@ -60,13 +71,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="text-start"></th>
-                                    <td>
-                                        <input type="checkbox" id="absence" name="absence" value="absence" {{ $attendance->attended ? '' : 'checked' }}>
-                                        <label for="absence">休業にする</label>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th class="text-start">備考</th>
                                     <td>
                                         <textarea name="comment" id="comment" cols="30" rows="4">{{ $attendance->comment }}</textarea>
@@ -77,10 +81,10 @@
                         <input type="hidden" name="date" value="{{ $dt }}">
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <button type="submit" name="update" class="btn btn-primary">
+                        <button type="submit" formaction="{{ route('attendances.update') }}" class="btn btn-primary">
                             変更
                         </button>
-                        <button type="submit" name="reset" class="btn btn-primary">
+                        <button type="submit" formaction="{{ route('attendances.delete') }}" class="btn btn-primary">
                             取消
                         </button>
                     </div>
