@@ -32,6 +32,7 @@ Route::post('/user/password', [App\Http\Controllers\UserController::class, 'upda
 /* update profile page */
 Route::get('/user/update', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+
 /* attendance view page */
 Route::get('/attendances', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendances.index');
 /* attendance create page */
@@ -41,3 +42,12 @@ Route::post('/attendances/add', [App\Http\Controllers\AttendanceController::clas
 Route::get('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'edit'])->name('attendances.edit');
 Route::post('/attendances/edit', [App\Http\Controllers\AttendanceController::class, 'update'])->name('attendances.update');
 Route::post('/attendances/delete', [App\Http\Controllers\AttendanceController::class, 'delete'])->name('attendances.delete');
+
+/**
+ * 管理者画面
+ */
+Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+    Auth::routes(['verify' => true]);
+
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+});
