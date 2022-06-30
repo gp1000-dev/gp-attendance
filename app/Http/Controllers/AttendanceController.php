@@ -201,21 +201,19 @@ class AttendanceController extends Controller
         /* 出欠の分岐 */
         if ($request->status === 'off') {
             /* 欠勤の場合 */
-            /* 出勤は'off' */
-            $attendance->status = $request->status;
             /* 開始時刻はnull */
             $attendance->start_time = null;
             /* 終了時刻はnull */
             $attendance->end_time = null;
         } else {
             /* 出勤の場合 */
-            /* 出勤は'full' or 'half' */
-            $attendance->status = $request->status;
             /* 開始時刻 */
             $attendance->start_time = $request->start_time;
             /* 終了時刻 */
             $attendance->end_time = $request->end_time;
         }
+        /* 出退勤状況 */
+        $attendance->status = $request->status;
         /* コメント */
         $attendance->comment = $request->comment;
 
