@@ -18,7 +18,8 @@
                                 <th>メール</th>
                                 <th></th>
                             </tr>
-                            @foreach ($users as $user)
+
+                            @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
                                 <td>{{ $user->last_name }}&ensp;{{ $user->first_name }}</td>
@@ -30,7 +31,7 @@
                                 <?php endif; ?></td>
 
                                 <td>{{$user->birthdate->format('Y年n月j日')}}</td>
-                                <td>{{$user->mail}}</td>
+                                <td>{{$user->email}}</td>
                                 <td></td>
                             </tr>
                             @endforeach
