@@ -28,7 +28,7 @@
                                     $maxEndTime = config('app.attendance.max_end_time');
                                     $timeDuration = \Carbon\Carbon::create(config('app.attendance.time_duration'));
                                     $timeDurationMinutes = $timeDuration->hour * 60 + $timeDuration->minute;
-
+                                    $status = $attendance->status === '' ? '' : $attendance->status;
                                     $period = \Carbon\CarbonPeriod::create($minStartTime, $maxEndTime)->minutes($timeDurationMinutes)->toArray();
                                     $start_time = is_null($attendance->start_time) ? \Carbon\Carbon::create($defaultStartTime) : $attendance->start_time;
                                     $end_time = is_null($attendance->end_time) ? \Carbon\Carbon::create($defaultEndTime) : $attendance->end_time;
@@ -42,14 +42,22 @@
                                 <tr>
                                     <th>状態</th>
                                     <td>
-                                        <select>
-                                            <option value="" selected>--</option>
-                                            <option value="full">出勤（全日）</option>
-                                            <option value="half">出勤（半日）</option>
-                                            <option value="off">休業</option>
+                                        @php
+                                        $select_items = [
+                                            ''      => '--',
+                                            'full'  => '出勤（全日）',
+                                            'half'  => '出勤（半日）',
+                                            'off'   => '休業',
+                                                ]                                         
+                                        @endphp
+                                        <select id="status" name="status"> 
+                                            @foreach ($select_items as $key => $value)
+                                                <option value="{{ $key }}" {{$key === $status ? 'selected' : ''}}>{{$value}}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <th class="text-start">開始時刻</th>
                                     <td>
