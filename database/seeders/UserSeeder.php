@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // テスト用ユーザー
         User::factory()->create([
             'last_name' => '久里',
             'first_name' => '英太',
@@ -25,5 +26,10 @@ class UserSeeder extends Seeder
             'gender' => 'male',
             'birthdate' => \Carbon\Carbon::parse('2001-05-01'),
         ]);
+
+        // テストユーザー
+        User::factory()
+            ->count(10)
+            ->create();
     }
 }
