@@ -18,9 +18,6 @@
                                 <th>メール</th>
                                 <th></th>
                             </tr>
-                            @php
-                            use Carbon\Carbon;
-                            @endphp
                             @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
