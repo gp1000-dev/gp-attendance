@@ -18,19 +18,21 @@
                                 <th>メール</th>
                                 <th></th>
                             </tr>
-
+                            @php
+                            use Carbon\Carbon;
+                            @endphp
                             @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
                                 <td>{{ $user->last_name }}&ensp;{{ $user->first_name }}</td>
                                 <td>
-                                <?php if ($user->gender === 'male'): ?>
-                                    男性
-                                <?php else: ?>
-                                    女性
-                                <?php endif; ?></td>
-
-                                <td>{{$user->birthdate->format('Y年n月j日')}}</td>
+                                    @if ($user->gender === 'male')
+                                        男性
+                                    @else
+                                        女性
+                                    @endif
+                                </td>
+                                <td>{{$user->birthdate->format('Y年n月j日')}}({{$user->birthdate->age}}歳)</td>
                                 <td>{{$user->email}}</td>
                                 <td></td>
                             </tr>
