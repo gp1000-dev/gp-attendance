@@ -31,7 +31,9 @@
                                 </td>
                                 <td>{{$user->birthdate->format('Y年n月j日')}}({{$user->birthdate->age}}歳)</td>
                                 <td>{{$user->email}}</td>
-                                <td></td>
+                                <td><button type="submit" formaction="" class="btn btn-primary">
+                                    詳細
+                                </button></td>
                             </tr>
                             @endforeach
                         </thead>
