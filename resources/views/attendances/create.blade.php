@@ -39,7 +39,7 @@
                                 </tr>
                                 <th>状態</th>
                                 <td>
-                                    <select id="status" name="status"> 
+                                    <select id="status" name="status">
                                         <option value="" selected>--</option>
                                         <option value="full">出勤（全日）</option>
                                         <option value="half">出勤（半日）</option>
@@ -89,20 +89,16 @@
 
 @section('script')
 <script>
-let start_time = document.getElementById('start_time');
-let end_time = document.getElementById('end_time');
-let absence = document.getElementById('absence');
-
-function specifyTime() {
-    if (absence.checked) {
-        start_time.disabled = true;
-        end_time.disabled = true;
-    } else {
-        start_time.disabled = false;
-        end_time.disabled = false;
-    }
-}
-
-absence.addEventListener('change', specifyTime);
+$(() => {
+    $('#status').change(() => {
+        if ($('#status').val() == 'off') {
+            $('#start_time').prop('disabled', true);
+            $('#end_time').prop('disabled', true);
+        } else {
+            $('#start_time').prop('disabled', false);
+            $('#end_time').prop('disabled', false);
+        }
+    });
+});
 </script>
 @endsection

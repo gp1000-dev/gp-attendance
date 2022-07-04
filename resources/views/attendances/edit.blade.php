@@ -48,9 +48,9 @@
                                             'full'  => '出勤（全日）',
                                             'half'  => '出勤（半日）',
                                             'off'   => '休業',
-                                                ]                                         
+                                                ]
                                         @endphp
-                                        <select id="status" name="status"> 
+                                        <select id="status" name="status">
                                             @foreach ($select_items as $key => $value)
                                                 <option value="{{ $key }}" {{$key === $status ? 'selected' : ''}}>{{$value}}</option>
                                             @endforeach
@@ -105,20 +105,21 @@
 
 @section('script')
 <script>
-let start_time = document.getElementById('start_time');
-let end_time = document.getElementById('end_time');
-let absence = document.getElementById('absence');
+$(() => {
+    if ($('#status').val() == 'off') {
+            $('#start_time').prop('disabled', true);
+            $('#end_time').prop('disabled', true);
+        }
 
-function specifyTime() {
-    if (absence.checked) {
-        start_time.disabled = true;
-        end_time.disabled = true;
-    } else {
-        start_time.disabled = false;
-        end_time.disabled = false;
-    }
-}
-
-absence.addEventListener('change', specifyTime);
+    $('#status').change(() => {
+        if ($('#status').val() == 'off') {
+            $('#start_time').prop('disabled', true);
+            $('#end_time').prop('disabled', true);
+        } else {
+            $('#start_time').prop('disabled', false);
+            $('#end_time').prop('disabled', false);
+        }
+    });
+});
 </script>
 @endsection
