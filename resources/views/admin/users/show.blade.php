@@ -11,7 +11,7 @@
             @endif --}}
             <div class="card">
                 <div class="card-header">ユーザー情報</div>
-                
+
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tbody>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-end">
             
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-primary">変更</a>
+                    <a href="" class="btn btn-primary">変更</a>
                 </div>
             </div>
         </div>
