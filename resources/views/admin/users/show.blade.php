@@ -26,6 +26,7 @@
                                 @endif
                             </td></tr>
                             <tr><th>誕生日</th><td>{{ $user->birthdate->format('Y年n月j日') }}({{$user->birthdate->age}}歳)</td></tr>
+                            <tr><th>メールアドレス</th><td>{{ $user->email }}</td></tr>
                         </tbody>
                     </table>
                 </div>
