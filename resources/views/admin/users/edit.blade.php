@@ -3,97 +3,97 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $message)
-                    <ul>
-                        <li>{{ $message }}</li>
-                    </ul>
-                @endforeach
-            </div>
-        @endif
         <div class="col-md-8">
+            <!-- バリデーション時のエラーを報告 -->
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <!-- エラー発生でリダイレクトの時の報告 -->
+            @if(session('warning'))
+                <div class="alert alert-danger">
+                    {{ session('warning') }}
+                </div>
+            @endif
             <div class="card">
-                <form id="editForm" method="POST">
+                <form method="POST" action="{{ route('user.update') }}">
                     @csrf
+                    <input type="hidden" name="id" value="{{ Auth::user()->id }}">
 
-                    <div class="card-header">勤怠編集</div>
+                    <div class="card-header">ユーザー情報変更</div>
                     <div class="card-body">
-                        <table class="table table-borderless">
+                        <table class="table table-bordered">
                             <tbody>
-                                @php
-                                    $defaultStartTime = config('app.attendance.default_start_time');
-                                    $defaultEndTime = config('app.attendance.default_end_time');
-                                    $minStartTime = config('app.attendance.min_start_time');
-                                    $maxEndTime = config('app.attendance.max_end_time');
-                                    $timeDuration = \Carbon\Carbon::create(config('app.attendance.time_duration'));
-                                    $timeDurationMinutes = $timeDuration->hour * 60 + $timeDuration->minute;
-                                    $status = $attendance->status;
-                                    $period = \Carbon\CarbonPeriod::create($minStartTime, $maxEndTime)->minutes($timeDurationMinutes)->toArray();
-                                    $start_time = is_null($attendance->start_time) ? \Carbon\Carbon::create($defaultStartTime) : $attendance->start_time;
-                                    $end_time = is_null($attendance->end_time) ? \Carbon\Carbon::create($defaultEndTime) : $attendance->end_time;
-                                @endphp
                                 <tr>
-                                    <th class="text-start">日付</th>
+                                    <th class="align-middle">氏名</th>
                                     <td>
-                                        {{ $dt->copy()->isoFormat('Y年M月D日（ddd）') }}
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}">
+                                            </div>
+                                            &ensp;
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}">
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>状態</th>
+                                    <th class="align-middle">氏名カナ</th>
                                     <td>
-                                        @php
-                                        $select_items = [
-                                            ''      => '--',
-                                            'full'  => '出勤（全日）',
-                                            'half'  => '出勤（半日）',
-                                            'off'   => '休業',
-                                                ]
-                                        @endphp
-                                        <select id="status" name="status">
-                                            @foreach ($select_items as $key => $value)
-                                                <option value="{{ $key }}" {{$key === $status ? 'selected' : ''}}>{{$value}}</option>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="last_kana_name" value="{{ $user->last_kana_name }}">
+                                            </div>
+                                            &ensp;
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="first_kana_name" value="{{ $user->first_kana_name }}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle">性別</th>
+                                    <td>
+                                        <input type="radio" name="gender" value="male" <?php echo  ($user->gender === 'male') ? 'checked' : '' ?>>男性
+                                        &ensp;
+                                        <input type="radio" name="gender" value="female" <?php echo ($user->gender === 'female') ? 'checked' : '' ?>>女性
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle">誕生日</th>
+                                    <td>
+                                        <select name="birthdate_year">
+                                            @foreach (range(\Carbon\Carbon::now()->addYears(-60)->year, \Carbon\Carbon::now()->year) as $year)
+                                                <option value="{{ $year }}" {{ intval($user->birthdate->format('Y')) === $year ? 'selected' : '' }}>{{ $year }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="text-start">開始時刻</th>
-                                    <td>
-                                        <select id="start_time" name="start_time">
-                                            @foreach ($period as $time)
-                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq($start_time) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                        年
+                                        <select name="birthdate_month">
+                                            @foreach (range(1, 12) as $month)
+                                                <option value="{{ $month }}" {{ intval($user->birthdate->format('n')) === $month ? 'selected' : '' }}>{{ $month }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-start">終了時刻</th>
-                                    <td>
-                                        <select id="end_time" name="end_time">
-                                            @foreach ($period as $time)
-                                                <option value="{{ $time->format('H:i') }}" {{ $time->eq($end_time) ? 'selected' : '' }}>{{ $time->format('H:i') }}</option>
+                                        月
+                                        <select name="birthdate_day">
+                                            @foreach (range(1, 31) as $day)
+                                                <option value="{{ $day }}" {{ intval($user->birthdate->format('j')) === $day ? 'selected' : '' }}>{{ $day }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-start">備考</th>
-                                    <td>
-                                        <textarea name="comment" id="comment" cols="30" rows="4">{{ $attendance->comment }}</textarea>
+                                        日
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <input type="hidden" name="date" value="{{ $dt }}">
                     </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <button type="submit" formaction="{{ route('attendances.update') }}" class="btn btn-primary">
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
                             変更
-                        </button>
-                        <button id="reset" type="button" class="btn btn-danger">
-                            取消
                         </button>
                     </div>
                 </form>
@@ -101,19 +101,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('script')
-<script>
-const editForm = document.getElementById('editForm');
-const reset = document.getElementById('reset');
-reset.addEventListener('click', () => {
-    const result = window.confirm('取消していいですか？');
-    if (result) {
-        editForm.method = 'post';
-        editForm.action = "{{ route('attendances.delete') }}";
-        editForm.submit();
-    }
-});
-</script>
 @endsection
