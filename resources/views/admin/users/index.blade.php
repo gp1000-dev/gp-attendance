@@ -34,10 +34,7 @@
                                 </td>
                                 <td>{{$user->birthdate->format('Y年n月j日')}}({{$user->birthdate->age}}歳)</td>
                                 <td>{{$user->email}}</td>
-                                <td><button  onclick="location.href='{{Route('admin.users.show',['id' => $user->id])}}'" class="btn btn-primary">
-                       
-                                    詳細
-                                </button></td>
+                                <td><a class="btn btn-primary" href="{{Route('admin.users.show',['id' => $user->id])}}" role="button">詳細</a></td>
                             </tr>
                             @endforeach    
                         </tbody>
