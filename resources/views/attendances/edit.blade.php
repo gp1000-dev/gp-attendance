@@ -14,7 +14,7 @@
         @endif
         <div class="col-md-8">
             <div class="card">
-                <form method="POST">
+                <form id="editForm" method="POST">
                     @csrf
 
                     <div class="card-header">勤怠編集</div>
@@ -48,9 +48,9 @@
                                             'full'  => '出勤（全日）',
                                             'half'  => '出勤（半日）',
                                             'off'   => '休業',
-                                                ]                                         
+                                                ]
                                         @endphp
-                                        <select id="status" name="status"> 
+                                        <select id="status" name="status">
                                             @foreach ($select_items as $key => $value)
                                                 <option value="{{ $key }}" {{$key === $status ? 'selected' : ''}}>{{$value}}</option>
                                             @endforeach
@@ -92,7 +92,7 @@
                         <button type="submit" formaction="{{ route('attendances.update') }}" class="btn btn-primary">
                             変更
                         </button>
-                        <button type="submit" formaction="{{ route('attendances.delete') }}" class="btn btn-primary">
+                        <button id="reset" type="button" class="btn btn-danger">
                             取消
                         </button>
                     </div>
@@ -105,20 +105,15 @@
 
 @section('script')
 <script>
-let start_time = document.getElementById('start_time');
-let end_time = document.getElementById('end_time');
-let absence = document.getElementById('absence');
-
-function specifyTime() {
-    if (absence.checked) {
-        start_time.disabled = true;
-        end_time.disabled = true;
-    } else {
-        start_time.disabled = false;
-        end_time.disabled = false;
+const editForm = document.getElementById('editForm');
+const reset = document.getElementById('reset');
+reset.addEventListener('click', () => {
+    const result = window.confirm('取消していいですか？');
+    if (result) {
+        editForm.method = 'post';
+        editForm.action = "{{ route('attendances.delete') }}";
+        editForm.submit();
     }
-}
-
-absence.addEventListener('change', specifyTime);
+});
 </script>
 @endsection
