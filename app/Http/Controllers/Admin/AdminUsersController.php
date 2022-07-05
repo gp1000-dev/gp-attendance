@@ -30,10 +30,10 @@ class AdminUsersController extends Controller
     }
     public function show($id)
     {
-        $users = User::where('id', $id)->get();
-        if (is_null($users->first())) {
+        $user = User::find($id);
+        if (is_null($user)) {
             abort(403);
         }
-        return view('admin.users.show', ['user' => $users->first()]);
+        return view('admin.users.show', ['user' => $user]);
     }
 }
