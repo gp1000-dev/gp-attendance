@@ -28,4 +28,12 @@ class AdminUsersController extends Controller
         $users = User::all();
         return view('admin.users.index', ['users' => $users]);
     }
+    public function show($id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            abort(403);
+        }
+        return view('admin.users.show', ['user' => $user]);
+    }
 }
