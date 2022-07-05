@@ -18,6 +18,9 @@
                                 <th>メール</th>
                                 <th></th>
                             </tr>
+                           
+                        </thead>
+                        <tbody>
                             @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
@@ -35,10 +38,7 @@
                                     詳細
                                 </button></td>
                             </tr>
-                            @endforeach
-                        </thead>
-                        <tbody>
-                            
+                            @endforeach    
                         </tbody>
                     </table>
                 </div>
