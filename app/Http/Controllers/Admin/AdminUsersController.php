@@ -31,6 +31,9 @@ class AdminUsersController extends Controller
     public function show($id)
     {
         $users = User::where('id', $id)->get();
+        if (is_null($users->first())) {
+            abort(403);
+        }
         return view('admin.users.show', ['user' => $users->first()]);
     }
 }
