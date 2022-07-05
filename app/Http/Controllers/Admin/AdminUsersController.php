@@ -28,4 +28,9 @@ class AdminUsersController extends Controller
         $users = User::all();
         return view('admin.users.index', ['users' => $users]);
     }
+    public function show($id)
+    {
+        $users = User::where('id', $id)->get();
+        return view('admin.users.show', ['user' => $users->first()]);
+    }
 }
