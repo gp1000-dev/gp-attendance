@@ -36,4 +36,12 @@ class AdminUsersController extends Controller
         }
         return view('admin.users.show', ['user' => $user]);
     }
+    public function edit($id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            abort(403);
+        }
+        return view('admin.users.edit', ['user' => $user]);
+    }
 }

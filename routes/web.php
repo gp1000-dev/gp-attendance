@@ -54,4 +54,6 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin.'], f
     Route::get('/users', [App\Http\Controllers\Admin\AdminUsersController::class, 'index'])->name('users.index');
 
     Route::get('/users/{id}', [App\Http\Controllers\Admin\AdminUsersController::class, 'show'])->name('users.show');
+
+    Route::get('/users/{id}/edit', [App\Http\Controllers\Admin\AdminUsersController::class, 'edit'])->name('users.edit');
 });

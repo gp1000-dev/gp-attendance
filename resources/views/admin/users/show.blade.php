@@ -32,7 +32,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-end">
             
-                    <a href="" class="btn btn-primary">変更</a>
+                    <a href="{{Route('admin.users.edit',['id' => $user->id])}}" class="btn btn-primary">変更</a>
                 </div>
             </div>
         </div>
