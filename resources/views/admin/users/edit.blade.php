@@ -116,10 +116,15 @@
 
                                 </div>
                                 <div>
-
-                                    <a href="{{ Route('admin.users.edit', ['id' => $user->id]) }}"
-                                        class="btn btn-primary">更新</a>
-                                    <a href="" class="btn btn-danger">削除</a>
+                                    <button type="submit"
+                                        formaction="{{ Route('admin.users.update', ['id' => $user->id]) }}"
+                                        class="btn btn-primary">
+                                        変更
+                                    </button>
+                                    <button type="submit" formaction="{{ route('attendances.update') }}"
+                                        class="btn btn-danger">
+                                        削除
+                                    </button>
                                 </div>
                             </div>
                         </div>
