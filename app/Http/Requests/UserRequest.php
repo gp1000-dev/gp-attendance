@@ -28,11 +28,18 @@ class UserRequest extends FormRequest
             'first_name' => 'required',
             'last_kana_name' => 'required',
             'first_kana_name' => 'required',
-            'gender' => 'required',
-            'birthdate' => 'require',
-            'email' => 'unique:users,email|regex:/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/'
-
-
+            'gender' => [
+                'required',
+                'regex:/^(male)$/',
+            ],
+            'birthdate_year' => 'regex:/^[0-9]{4}$/',
+            'birthdate_month' => [
+                'regex:/^([1-9]|1[0-2])$/',
+            ],
+            'email' => [
+                'required',
+                'regex:/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
+            ],
 
         ];
     }
@@ -44,9 +51,6 @@ class UserRequest extends FormRequest
             'first_name' => '名前',
             'last_kana_name' => '姓カナ',
             'first_kana_name' => '名前カナ',
-
-            'email' => 'email',
-
         ];
     }
 }
