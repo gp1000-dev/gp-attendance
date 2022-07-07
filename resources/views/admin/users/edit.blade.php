@@ -100,7 +100,10 @@
                                     </tr>
                                     <tr>
                                         <th>メールアドレス</th>
-                                        <td>{{ $user->email }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" name="email"
+                                                value="{{ $user->email }}">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -109,12 +112,13 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <a href="{{ Route('admin.users.show', ['id' => $user->id]) }}"
-                                        class="btn btn-primary">戻る</a>
+                                        class="btn btn-secondary">戻る</a>
 
                                 </div>
                                 <div>
 
-                                    <a href="{{ Route('admin.users.edit') }}" class="btn btn-primary">更新</a>
+                                    <a href="{{ Route('admin.users.edit', ['id' => $user->id]) }}"
+                                        class="btn btn-primary">更新</a>
                                     <a href="" class="btn btn-danger">削除</a>
                                 </div>
                             </div>
