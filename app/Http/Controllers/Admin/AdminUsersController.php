@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
+
 use App\Models\User;
-use App\Http\Requests\UpdateProfileRequest;
+
+use App\Http\Requests\UserRequest;
 
 
 class AdminUsersController extends Controller
@@ -47,7 +50,7 @@ class AdminUsersController extends Controller
         }
         return view('admin.users.edit', ['user' => $user]);
     }
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         // IDチェック
         // if ($request->id != Auth::user()->id) {
@@ -55,11 +58,12 @@ class AdminUsersController extends Controller
         // }
 
         // ユーザー情報の取得
-        $user_id = $request->id;
+        $user_id = $id;
         $user = User::find($user_id);
         if (is_null($user)) {
             abort(403);
         }
+
         // 入力情報のDBへの書き込み準備
         // 姓と名前
         $user->last_name = $request->last_name;
@@ -80,6 +84,6 @@ class AdminUsersController extends Controller
         $user->save();
 
         // ユーザーページへリダイレクト
-        return redirect()->route('admin.user.index')->with('flash_message', 'ユーザー情報を更新しました。');
+        return redirect()->route('admin.users.show', ['id' => $user->id])->with('flash_message', 'ユーザー情報を更新しました。');
     }
 }
