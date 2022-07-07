@@ -47,7 +47,7 @@ class AdminUsersController extends Controller
         }
         return view('admin.users.edit', ['user' => $user]);
     }
-    public function update(UpdateProfileRequest $request)
+    public function update(Request $request, $id)
     {
         // IDチェック
         // if ($request->id != Auth::user()->id) {
@@ -56,9 +56,7 @@ class AdminUsersController extends Controller
 
         // ユーザー情報の取得
         $user_id = $request->id;
-        $user = U
-        
-        user::find($user_id);
+        $user = User::find($user_id);
         if (is_null($user)) {
             abort(403);
         }
@@ -82,6 +80,6 @@ class AdminUsersController extends Controller
         $user->save();
 
         // ユーザーページへリダイレクト
-        return redirect()->route('user.index')->with('flash_message', 'ユーザー情報を更新しました。');
+        return redirect()->route('admin.user.index')->with('flash_message', 'ユーザー情報を更新しました。');
     }
 }

@@ -114,7 +114,7 @@
                                 </div>
                                 <div>
 
-                                    <a href="" class="btn btn-primary">更新</a>
+                                    <a href="{{ Route('admin.users.edit') }}" class="btn btn-primary">更新</a>
                                     <a href="" class="btn btn-danger">削除</a>
                                 </div>
                             </div>
