@@ -38,9 +38,6 @@ class UserRequest extends FormRequest
                 'regex:/^([1-9]|1[0-2])$/',
             ],
             'email' => 'required|email',
-
-
-
         ];
     }
 }
