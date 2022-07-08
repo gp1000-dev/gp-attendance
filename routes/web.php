@@ -52,8 +52,10 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'as' => 'admin.'], f
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
     /* users view page */
     Route::get('/users', [App\Http\Controllers\Admin\AdminUsersController::class, 'index'])->name('users.index');
+    Route::get('/users/add', [App\Http\Controllers\Admin\AdminUsersController::class, 'add'])->name('users.add');
+    Route::POST('/users/store', [App\Http\Controllers\Admin\AdminUsersController::class, 'store'])->name('users.store');
 
     Route::get('/users/{id}', [App\Http\Controllers\Admin\AdminUsersController::class, 'show'])->name('users.show');
-
     Route::get('/users/{id}/edit', [App\Http\Controllers\Admin\AdminUsersController::class, 'edit'])->name('users.edit');
+    Route::POST('/users/{id}/edit', [App\Http\Controllers\Admin\AdminUsersController::class, 'update'])->name('users.update');
 });

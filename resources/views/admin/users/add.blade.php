@@ -24,7 +24,6 @@
                     <form method="POST" action="{{ route('user.update') }}">
                         @csrf
                         <input type="hidden" name="id" value="{{ Auth::user()->id }}">
-
                         <div class="card-header">ユーザー情報変更</div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -39,15 +38,12 @@
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="last_name">
                                                 </div>
-
                                                 <div class="col-md-1">
                                                     <label class="form-label mt-2" for="first_name">名</label>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="first_name">
                                                 </div>
-
-
                                             </div>
                                         </td>
                                     </tr>
@@ -73,7 +69,7 @@
                                     <tr>
                                         <th class="align-middle">性別</th>
                                         <td>
-                                            <input type="radio" name="gender" value="male" checked>男性
+                                            <input type="radio" name="gender" value="male">男性
                                             &ensp;
                                             <input type="radio" name="gender" value="female">女性
                                         </td>
@@ -82,6 +78,7 @@
                                         <th class="align-middle">誕生日</th>
                                         <td>
                                             <select name="birthdate_year">
+                                                <option value="--">--</option>
                                                 @foreach (range(\Carbon\Carbon::now()->addYears(-60)->year, \Carbon\Carbon::now()->year) as $year)
                                                     <option value="{{ $year }}">
                                                         {{ $year }}</option>
@@ -89,17 +86,18 @@
                                             </select>
                                             年
                                             <select name="birthdate_month">
+                                                <option value="--">--</option>
                                                 @foreach (range(1, 12) as $month)
-                                                    <option
-                                                        value="{{ $month }}"<?= $month === 1 ? 'selected' : '' ?>>
+                                                    <option value="{{ $month }}">>
                                                         {{ $month }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                             月
                                             <select name="birthdate_day">
+                                                <option value="--">--</option>
                                                 @foreach (range(1, 31) as $day)
-                                                    <option value="{{ $day }}"<?= $day === 1 ? 'selected' : '' ?>>
+                                                    <option value="{{ $day }}">
                                                         {{ $day }}
                                                 @endforeach
                                             </select>
@@ -107,10 +105,21 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>メールアドレス</th>
+                                        <th class="align-middle">メールアドレス</th>
                                         <td>
-                                            <input type="email" class="form-control" name="email"
-                                                placeholder="info@excample.com">
+                                            <input type="email" class="form-control" name="email">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="align-middle">パスワード</th>
+                                        <td>
+                                            <input type="password" class="form-control" name="password">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="align-middle">パスワード(確認)</th>
+                                        <td>
+                                            <input type="password" class="form-control" name="password-confirm">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -119,7 +128,7 @@
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
                                 <a href="{{ Route('admin.users.index') }}" class="btn btn-secondary">戻る</a>
-                                <a href="" class="btn btn-primary">登録</a>
+                                <a href="{{ Route('admin.users.store') }}" class="btn btn-primary">登録</a>
                             </div>
                         </div>
                     </form>
