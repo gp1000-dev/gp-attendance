@@ -58,8 +58,8 @@ class AdminUsersController extends Controller
         // }
 
         // ユーザー情報の取得
-        $user_id = $id;
-        $user = User::find($user_id);
+        $userId = $id;
+        $user = User::find($userId);
         if (is_null($user)) {
             abort(403);
         }

@@ -36,21 +36,10 @@ class UserRequest extends FormRequest
             'birthdate_month' => [
                 'regex:/^([1-9]|1[0-2])$/',
             ],
-            'email' => [
-                'required',
-                'regex:/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/',
-            ],
+            'email' => 'required|email',
 
-        ];
-    }
 
-    public function attributes()
-    {
-        return [
-            'last_name' => '姓',
-            'first_name' => '名前',
-            'last_kana_name' => '姓カナ',
-            'first_kana_name' => '名前カナ',
+
         ];
     }
 }
