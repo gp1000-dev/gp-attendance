@@ -24,7 +24,6 @@
                     <form method="POST" action="{{ route('user.update') }}">
                         @csrf
                         <input type="hidden" name="id" value="{{ Auth::user()->id }}">
-
                         <div class="card-header">ユーザー情報変更</div>
                         <div class="card-body">
                             <table class="table table-bordered">
