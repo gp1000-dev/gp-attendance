@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'first_kana_name' => 'required',
             'gender' => [
                 'required',
-                'regex:/^(male|female)$/',
+                Rule::in(['male', 'female']),
             ],
             'birthdate_year' => 'regex:/^[0-9]{4}$/',
             'birthdate_month' => [
