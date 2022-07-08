@@ -24,20 +24,28 @@
                     <form method="POST" action="{{ route('user.update') }}">
                         @csrf
                         <input type="hidden" name="id" value="{{ Auth::user()->id }}">
-
                         <div class="card-header">ユーザー情報変更</div>
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
+                                        <th class="align-middle">#</th>
+                                        <td>{{ $user->id }}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="align-middle">氏名</th>
                                         <td>
                                             <div class="row">
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="last_kana_name">姓</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="last_name"
                                                         value="{{ $user->last_name }}">
                                                 </div>
-                                                &ensp;
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="first_kana_name">名</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="first_name"
                                                         value="{{ $user->first_name }}">
@@ -49,11 +57,16 @@
                                         <th class="align-middle">氏名カナ</th>
                                         <td>
                                             <div class="row">
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="last_kana_name">姓</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="last_kana_name"
                                                         value="{{ $user->last_kana_name }}">
                                                 </div>
-                                                &ensp;
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="first_kana_name">名</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="first_kana_name"
                                                         value="{{ $user->first_kana_name }}">
@@ -99,8 +112,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>メールアドレス</th>
-                                        <td>{{ $user->email }}</td>
+                                        <th class="align-middle">メールアドレス</th>
+                                        <td>
+                                            <input type="text" class="form-control" name="email"
+                                                value="{{ $user->email }}">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -109,13 +125,19 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <a href="{{ Route('admin.users.show', ['id' => $user->id]) }}"
-                                        class="btn btn-primary">戻る</a>
+                                        class="btn btn-secondary">戻る</a>
 
                                 </div>
                                 <div>
-
-                                    <a href="" class="btn btn-primary">更新</a>
-                                    <a href="" class="btn btn-danger">削除</a>
+                                    <button type="submit"
+                                        formaction="{{ Route('admin.users.update', ['id' => $user->id]) }}"
+                                        class="btn btn-primary">
+                                        変更
+                                    </button>
+                                    <button type="submit" formaction="{{ route('attendances.update') }}"
+                                        class="btn btn-danger">
+                                        削除
+                                    </button>
                                 </div>
                             </div>
                         </div>

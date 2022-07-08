@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
+
 
 class AdminUsersController extends Controller
 {
@@ -49,49 +52,39 @@ class AdminUsersController extends Controller
     {
         return view('admin.users.add');
     }
-    public function update(UserRequest $request)
+
+    public function update(UserRequest $request, $id)
     {
-        // 現在のパスワードをチェック
-        if (!password_verify($request->password, $request->password - c > onfirm)) {
-            return redirect()->route('admin.user.add')->with('warning', 'パスワードが一致しません。');
+        // IDチェック
+        // if ($request->id != Auth::user()->id) {
+        //     return redirect()->route('user.edit')->with('warning', '致命的なエラーです。');
+        // }
+
+        // ユーザー情報の取得
+        $userId = $id;
+        $user = User::find($userId);
+        if (is_null($user)) {
+            abort(403);
         }
-        User::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'last_kana_name' => $request->last_kana_name,
-            'first_kana_name' => $request->first_kana_name,
-            'gender' => $request->gender,
-            'birthdate' => Carbon::createFromDate(
-                $request->birthdate_year,
-                $request->birthdate_month,
-                $request->birthdate_day
-            ),
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // 入力情報のDBへの書き込み準備
+        // 姓と名前
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        // 姓カナと名前カナ
+        $user->last_kana_name = $request->last_kana_name;
+        $user->first_kana_name = $request->first_kana_name;
+        // 性別
+        $user->gender = $request->gender;
+        // 誕生日
+        $user->birthdate = Carbon::createFromDate(
+            $request->birthdate_year,
+            $request->birthdate_month,
+            $request->birthdate_day
+        );
+        $user->email = $request->email;
+        // DBへの保存
+        $user->save();
         // ユーザーページへリダイレクト
-        return redirect()->route('admin.user.show')->with('flash_message', 'ユーザー情報を登録しました。');
-    }
-
-    /**
-     * User password update process
-     *
-     * @return Illuminate\Http\RedirectResponse
-     */
-    public function updatePassword(UpdatePasswordRequest $request)
-    {
-
-
-
-
-
-
-        // パスワードを保存
-        $user = null;
-        $user->password = Hash::make($request->password);
-        $user->last_name =
-            $user->save();
-
-        return redirect()->route('user.index')->with('flash_message', 'パスワードを変更しました。');
+        return redirect()->route('admin.users.show', ['id' => $user->id])->with('flash_message', 'ユーザー情報を更新しました。');
     }
 }
