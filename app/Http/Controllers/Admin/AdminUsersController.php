@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
+
 
 class AdminUsersController extends Controller
 {
@@ -43,5 +46,39 @@ class AdminUsersController extends Controller
             abort(403);
         }
         return view('admin.users.edit', ['user' => $user]);
+    }
+    public function update(UserRequest $request, $id)
+    {
+        // IDチェック
+        // if ($request->id != Auth::user()->id) {
+        //     return redirect()->route('user.edit')->with('warning', '致命的なエラーです。');
+        // }
+
+        // ユーザー情報の取得
+        $userId = $id;
+        $user = User::find($userId);
+        if (is_null($user)) {
+            abort(403);
+        }
+        // 入力情報のDBへの書き込み準備
+        // 姓と名前
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        // 姓カナと名前カナ
+        $user->last_kana_name = $request->last_kana_name;
+        $user->first_kana_name = $request->first_kana_name;
+        // 性別
+        $user->gender = $request->gender;
+        // 誕生日
+        $user->birthdate = Carbon::createFromDate(
+            $request->birthdate_year,
+            $request->birthdate_month,
+            $request->birthdate_day
+        );
+        $user->email = $request->email;
+        // DBへの保存
+        $user->save();
+        // ユーザーページへリダイレクト
+        return redirect()->route('admin.users.show', ['id' => $user->id])->with('flash_message', 'ユーザー情報を更新しました。');
     }
 }
