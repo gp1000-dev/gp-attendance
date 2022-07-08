@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use Carbon\Carbon;
-
 use App\Models\User;
-
 use App\Http\Requests\UserRequest;
 
 
@@ -63,7 +60,6 @@ class AdminUsersController extends Controller
         if (is_null($user)) {
             abort(403);
         }
-
         // 入力情報のDBへの書き込み準備
         // 姓と名前
         $user->last_name = $request->last_name;
@@ -82,7 +78,6 @@ class AdminUsersController extends Controller
         $user->email = $request->email;
         // DBへの保存
         $user->save();
-
         // ユーザーページへリダイレクト
         return redirect()->route('admin.users.show', ['id' => $user->id])->with('flash_message', 'ユーザー情報を更新しました。');
     }
