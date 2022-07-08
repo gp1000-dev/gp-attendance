@@ -29,7 +29,7 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="align-middle">#</th>
                                         <td>{{ $user->id }}</td>
                                     </tr>
                                     <tr>
@@ -112,7 +112,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>メールアドレス</th>
+                                        <th class="align-middle">メールアドレス</th>
                                         <td>
                                             <input type="text" class="form-control" name="email"
                                                 value="{{ $user->email }}">
