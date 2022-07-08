@@ -30,6 +30,10 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
+                                        <th>#</th>
+                                        <td>{{ $user->id }}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="align-middle">氏名</th>
                                         <td>
                                             <div class="row">
