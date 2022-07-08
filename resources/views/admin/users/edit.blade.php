@@ -33,11 +33,16 @@
                                         <th class="align-middle">氏名</th>
                                         <td>
                                             <div class="row">
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="last_kana_name">姓</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="last_name"
                                                         value="{{ $user->last_name }}">
                                                 </div>
-                                                &ensp;
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="first_kana_name">名</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="first_name"
                                                         value="{{ $user->first_name }}">
@@ -49,11 +54,16 @@
                                         <th class="align-middle">氏名カナ</th>
                                         <td>
                                             <div class="row">
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="last_kana_name">姓</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="last_kana_name"
                                                         value="{{ $user->last_kana_name }}">
                                                 </div>
-                                                &ensp;
+                                                <div class="col-md-1">
+                                                    <label class="form-label mt-2" for="first_kana_name">名</label>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <input type="text" class="form-control" name="first_kana_name"
                                                         value="{{ $user->first_kana_name }}">
