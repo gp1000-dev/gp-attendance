@@ -163,6 +163,7 @@ return [
         'first_kana_name' => '名前カナ',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'password_confirmation' => 'パスワード（確認）',
         'gender' => '性別',
         'birthdate_year' => '誕生年',
         'birthdate_month' => '誕生月',
