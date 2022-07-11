@@ -37,12 +37,7 @@ class UserRequest extends FormRequest
             'birthdate_month' => [
                 'regex:/^([1-9]|1[0-2])$/',
             ],
-            'email' => 'required|email|unique:users',
-            'password'  =>  'required',
-            'password_confirmation' => [
-                'required',
-                'same:password_confirmation',
-            ],
+
         ];
     }
 }
