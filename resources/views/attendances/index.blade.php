@@ -84,7 +84,7 @@
                                     </td>
                                     <td>
                                         {{-- 出席の場合は勤務時間をメソッドで求める --}}
-                                        {{ $attendance ? (!($attendance->attended === '休業') ? $attendance->workTime()->format('H:i') : '') : '' }}
+                                        {{ $attendance ? (!($attendance->status === 'off') ? $attendance->workTime()->format('H:i') : '') : '' }}
                                     </td>
                                     <td>
                                         {{-- コメント(備考) --}}
