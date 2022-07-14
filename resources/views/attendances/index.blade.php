@@ -108,7 +108,7 @@
                                     </td>
                                 </tr>
                                 @php
-                                    if (!is_null($attendance) && $attendance->attended) {
+                                    if (!is_null($attendance) && !($attendance->status === 'off')) {
                                         $totalWorkMinutes += ($attendance->workTime()->hour * 60 + $attendance->workTime()->minute);
                                     }
                                 @endphp
@@ -118,7 +118,11 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                @if ($totalWorkMinutes != 0)
                                 <td>{{floor($totalWorkMinutes / 60)}}:{{sprintf('%02d', $totalWorkMinutes % 60)}}</td>
+                                @ifelse
+                                <td></td>
+                                @endif
                                 <td></td>
                                 <td></td>
                             </tr>
