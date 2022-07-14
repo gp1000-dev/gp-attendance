@@ -105,14 +105,11 @@
 
 @section('script')
 <script>
-const editForm = document.getElementById('editForm');
-const reset = document.getElementById('reset');
-reset.addEventListener('click', () => {
-    const result = window.confirm('取消していいですか？');
-    if (result) {
-        editForm.method = 'post';
-        editForm.action = "{{ route('attendances.delete') }}";
-        editForm.submit();
+$('#reset').on('click', () => {
+    if (confirm('取消していいですか？')) {
+        $('#editForm').attr('method', 'post');
+        $('#editForm').attr('action', "{{ route('attendances.delete') }}");
+        $('#editForm').submit();
     }
 });
 </script>
