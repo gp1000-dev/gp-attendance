@@ -190,6 +190,7 @@ class AttendanceController extends Controller
         if ($date->gt(Carbon::today())) {
             abort(403);
         }
+
         /* 1日分のデータを取得する */
         $attendance = Attendance::where('user_id', Auth::user()->id)
             ->where('date', $request->date)
