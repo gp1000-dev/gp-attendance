@@ -105,11 +105,10 @@
 
 @section('script')
 <script>
-{
 if ($('#status').val() === 'off') {
-        $('#start_time').prop('disabled', true);
-        $('#end_time').prop('disabled', true);
-    }
+    $('#start_time').prop('disabled', true);
+    $('#end_time').prop('disabled', true);
+}
 
 $('#status').on('change', () => {
     if ($('#status').val() === 'off') {
@@ -120,6 +119,5 @@ $('#status').on('change', () => {
         $('#end_time').prop('disabled', false);
     }
 });
-}
 </script>
 @endsection
