@@ -105,21 +105,21 @@
 
 @section('script')
 <script>
-$(() => {
-    if ($('#status').val() == 'off') {
-            $('#start_time').prop('disabled', true);
-            $('#end_time').prop('disabled', true);
-        }
+{
+if ($('#status').val() === 'off') {
+        $('#start_time').prop('disabled', true);
+        $('#end_time').prop('disabled', true);
+    }
 
-    $('#status').change(() => {
-        if ($('#status').val() == 'off') {
-            $('#start_time').prop('disabled', true);
-            $('#end_time').prop('disabled', true);
-        } else {
-            $('#start_time').prop('disabled', false);
-            $('#end_time').prop('disabled', false);
-        }
-    });
+$('#status').on('change', () => {
+    if ($('#status').val() === 'off') {
+        $('#start_time').prop('disabled', true);
+        $('#end_time').prop('disabled', true);
+    } else {
+        $('#start_time').prop('disabled', false);
+        $('#end_time').prop('disabled', false);
+    }
 });
+}
 </script>
 @endsection
