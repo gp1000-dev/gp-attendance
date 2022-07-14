@@ -120,7 +120,7 @@
                                 <td></td>
                                 @if ($totalWorkMinutes != 0)
                                 <td>{{floor($totalWorkMinutes / 60)}}:{{sprintf('%02d', $totalWorkMinutes % 60)}}</td>
-                                @ifelse
+                                @else
                                 <td></td>
                                 @endif
                                 <td></td>
