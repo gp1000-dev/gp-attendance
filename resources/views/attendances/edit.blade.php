@@ -105,18 +105,11 @@
 
 @section('script')
 <script>
-if ($('#status').val() === 'off') {
-    $('#start_time').prop('disabled', true);
-    $('#end_time').prop('disabled', true);
-}
-
-$('#status').on('change', () => {
-    if ($('#status').val() === 'off') {
-        $('#start_time').prop('disabled', true);
-        $('#end_time').prop('disabled', true);
-    } else {
-        $('#start_time').prop('disabled', false);
-        $('#end_time').prop('disabled', false);
+$('#reset').on('click', () => {
+    if (confirm('取消していいですか？')) {
+        $('#editForm').attr('method', 'post');
+        $('#editForm').attr('action', "{{ route('attendances.delete') }}");
+        $('#editForm').submit();
     }
 });
 </script>
