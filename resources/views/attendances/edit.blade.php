@@ -105,14 +105,18 @@
 
 @section('script')
 <script>
-const editForm = document.getElementById('editForm');
-const reset = document.getElementById('reset');
-reset.addEventListener('click', () => {
-    const result = window.confirm('取消していいですか？');
-    if (result) {
-        editForm.method = 'post';
-        editForm.action = "{{ route('attendances.delete') }}";
-        editForm.submit();
+if ($('#status').val() === 'off') {
+    $('#start_time').prop('disabled', true);
+    $('#end_time').prop('disabled', true);
+}
+
+$('#status').on('change', () => {
+    if ($('#status').val() === 'off') {
+        $('#start_time').prop('disabled', true);
+        $('#end_time').prop('disabled', true);
+    } else {
+        $('#start_time').prop('disabled', false);
+        $('#end_time').prop('disabled', false);
     }
 });
 </script>
