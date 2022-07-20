@@ -135,9 +135,12 @@ class AttendanceController extends Controller
 
         /* DBに登録する */
         $attendance->save();
+        /* 何月かを取得 */
+        $carbon =  new Carbon($attendance->date);
+        $month = $carbon->format('Y-m');
 
         /* 勤怠表示画面に戻す */
-        return redirect()->route('attendances.index')->with('message', '登録しました。');
+        return redirect()->route('attendances.index',['month' => $month])->with('message', '登録しました。');
     }
 
     /**
@@ -192,7 +195,9 @@ class AttendanceController extends Controller
         $attendance = Attendance::where('user_id', Auth::user()->id)
             ->where('date', $request->date)
             ->first();
-
+        /* 何月かを取得 */
+        $carbon =  new Carbon($attendance->date);
+        $month = $carbon->format('Y-m');
         /* DBにレコードが存在しない日付は不正 */
         if (is_null($attendance)) {
             abort(403);
@@ -221,7 +226,7 @@ class AttendanceController extends Controller
         $attendance->save();
 
         /* 勤怠表示画面に戻す */
-        return redirect()->route('attendances.index')->with('message', '変更しました。');
+        return redirect()->route('attendances.index',['month' => $month])->with('message', '変更しました。');
     }
 
     /**
@@ -241,7 +246,9 @@ class AttendanceController extends Controller
         $attendance = Attendance::where('user_id', Auth::user()->id)
             ->where('date', $request->date)
             ->first();
-
+        /* 何月かを取得 */
+        $carbon =  new Carbon($attendance->date);
+        $month = $carbon->format('Y-m');
         /* DBにレコードが存在しない日付は不正 */
         if (is_null($attendance)) {
             abort(403);
@@ -251,6 +258,6 @@ class AttendanceController extends Controller
         $attendance->delete();
 
         /* 勤怠表示画面に戻す */
-        return redirect()->route('attendances.index')->with('message', '取消しました。');
+        return redirect()->route('attendances.index',['month' => $month])->with('message', '取消しました。');
     }
 }
