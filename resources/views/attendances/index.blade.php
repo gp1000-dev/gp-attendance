@@ -59,7 +59,7 @@
                                     <td>{{ $date->isoFormat('D(ddd)') }}</td>
                                     {{-- その日のデータがある場合だけ表示する --}}
                                     <td>
-                                        
+
                                         {{-- 状態(status)を出力する --}}
                                         @if (isset($attendance))
                                             @if ($attendance->status === 'full' )
@@ -69,7 +69,7 @@
                                             @elseif ($attendance->status === 'off')
                                             休
                                             @else
-                                            
+
                                             @endif
                                         @endif
 
@@ -84,7 +84,7 @@
                                     </td>
                                     <td>
                                         {{-- 出席の場合は勤務時間をメソッドで求める --}}
-                                        {{ $attendance ? ($attendance->attended ? $attendance->workTime()->format('H:i') : '') : '' }}
+                                        {{ $attendance ? (!($attendance->status === 'off') ? $attendance->workTime()->format('H:i') : '') : '' }}
                                     </td>
                                     <td>
                                         {{-- コメント(備考) --}}
@@ -108,7 +108,7 @@
                                     </td>
                                 </tr>
                                 @php
-                                    if (!is_null($attendance) && $attendance->attended) {
+                                    if (!is_null($attendance) && !($attendance->status === 'off')) {
                                         $totalWorkMinutes += ($attendance->workTime()->hour * 60 + $attendance->workTime()->minute);
                                     }
                                 @endphp

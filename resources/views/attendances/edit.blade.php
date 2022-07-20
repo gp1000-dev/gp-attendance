@@ -14,7 +14,7 @@
         @endif
         <div class="col-md-8">
             <div class="card">
-                <form method="POST">
+                <form id="editForm" method="POST">
                     @csrf
 
                     <div class="card-header">勤怠編集</div>
@@ -92,7 +92,7 @@
                         <button type="submit" formaction="{{ route('attendances.update') }}" class="btn btn-primary">
                             変更
                         </button>
-                        <button type="submit" formaction="{{ route('attendances.delete') }}" class="btn btn-primary">
+                        <button id="reset" type="button" class="btn btn-danger">
                             取消
                         </button>
                     </div>
